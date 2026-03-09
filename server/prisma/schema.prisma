@@ -1,0 +1,119 @@
+// SWRC Digital Platform - Prisma Schema
+// PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         Role     @default(EDITOR)
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Publication {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  type          String   // e.g. "Annual Report", "Financial Report", "Policy Brief"
+  description   String   @db.Text
+  year          Int
+  pages         Int?
+  fileSize      String?  @map("file_size") // e.g. "2.4 MB"
+  fileUrl       String?  @map("file_url")   // path or URL to PDF
+  downloadCount Int      @default(0) @map("download_count")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("publications")
+}
+
+model Research {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  authors       String   @db.Text
+  year          Int
+  abstract      String   @db.Text
+  methodology   String?
+  category      String   // e.g. "Gender Studies", "Economic Research"
+  keywords      String[] // array of keywords
+  pdfUrl        String?  @map("pdf_url")
+  downloadCount Int      @default(0) @map("download_count")
+  published     Boolean  @default(true)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("research")
+}
+
+model Program {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  iconName    String?  @map("icon_name") // Lucide icon name, e.g. "Users", "GraduationCap"
+  sortOrder   Int      @default(0) @map("sort_order")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("programs")
+}
+
+model Story {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  category  String
+  story     String   @db.Text
+  imageUrl  String?  @map("image_url")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("stories")
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}
+
+model MediaItem {
+  id           String   @id @default(cuid())
+  title        String
+  type         String   // e.g. "Documentary", "Interview", "Photo"
+  description  String?  @db.Text
+  duration     String?  // e.g. "25:30"
+  views        Int      @default(0)
+  date         String?  // e.g. "March 2024"
+  youtubeId    String?  @map("youtube_id")
+  thumbnailUrl String?  @map("thumbnail_url")
+  mediaType    String   @default("video") @map("media_type") // "video" | "photo"
+  fileUrl      String?  @map("file_url")  // for uploaded photos/videos
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("media_items")
+}
