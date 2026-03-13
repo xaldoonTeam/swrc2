@@ -110,7 +110,7 @@ const PartnersSection: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
             Partners &amp; Recognition
           </h2>
-          <p className="text-teal-600 font-medium text-sm md:text-base max-w-xl mx-auto">
+          <p className="text-orange-600 font-medium text-sm md:text-base max-w-xl mx-auto">
             We work with government, international agencies, local partners, and networks to advance women&apos;s empowerment in Somaliland.
           </p>
         </motion.div>
@@ -129,7 +129,7 @@ const PartnersSection: React.FC = () => {
               className="bg-white rounded p-6 md:p-8 shadow-sm border border-gray-100"
             >
               <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded bg-teal-500/10 flex items-center justify-center text-teal-600">
+                <div className="w-10 h-10 rounded bg-orange-500/10 flex items-center justify-center text-orange-600">
                   <Icon className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900">{title}</h3>
