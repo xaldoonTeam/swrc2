@@ -86,7 +86,7 @@ const AboutPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <img 
-          src="/public/about.jpg" 
+          src="/about.jpg" 
           className="absolute inset-0 w-full h-full object-cover"
           alt="Empowerment background"
         />
