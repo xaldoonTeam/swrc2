@@ -112,7 +112,7 @@ const WelcomeSection: React.FC = () => {
             className="absolute top-0 left-0 w-4/5 h-4/5 overflow-hidden rounded-[1rem] shadow-xl cursor-pointer"
           >
             <motion.img 
-              src="../../public/welcome.jpg" 
+              src="/welcome.jpg" 
               className="w-full h-full object-cover"
               alt="Women training group"
               whileHover={{ scale: 1.1 }}
@@ -135,7 +135,7 @@ const WelcomeSection: React.FC = () => {
             className="absolute bottom-0 right-0 w-3/5 h-3/5 overflow-hidden rounded-[1rem] border-[10px] border-white shadow-2xl z-10 cursor-pointer"
           >
             <motion.img 
-              src="../../public/dumar.jpg" 
+              src="/dumar.jpg" 
               className="w-full h-full object-cover"
               alt="Woman smiling"
               whileHover={{ scale: 1.15 }}

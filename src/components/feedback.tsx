@@ -13,7 +13,7 @@ function Feedback() {
             </div>
 
             <div className="bg-white border-2 border-orange-400 rounded p-6 flex gap-6 relative shadow-lg">
-                <img src="../../public/signle2.jpg" className="w-24 h-24 rounded-lg object-cover" alt="User" />
+                <img src="/signle2.jpg" className="w-24 h-24 rounded-lg object-cover" alt="User" />
                 <div>
                     <h4 className="font-bold text-lg text-gray-800">Muna Abdi</h4>
                     <p className="text-xs text-gray-500 mb-2">Business women</p>

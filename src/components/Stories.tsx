@@ -19,12 +19,12 @@ const Stories = () => (
     <div className="flex flex-wrap justify-center gap-20 max-w-7xl mx-auto">
       <AlumniStory 
         name="Muna" 
-        image="../../public/single.jpg"
+        image="/single.jpg"
         story="Muna, an SWRC graduate, gained essential job-hunting skills, from building a strong CV to mastering interviews..."
       />
       <AlumniStory 
         name="Fihiima Abdirahman" 
-        image="../../public/single3.jpg"
+        image="/single3.jpg"
         story="Fihiima is a resilient entrepreneur and dedicated professional. After completing the Employability Skills Training Program..."
       />
     </div>
