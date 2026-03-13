@@ -1,4 +1,6 @@
 import { AlertTriangle } from "lucide-react";
+import { useAdminTheme } from "../../contexts/AdminThemeContext";
+import { adminClasses } from "../../lib/adminTheme";
 
 interface ConfirmDialogProps {
   isOpen: boolean;
@@ -23,6 +25,8 @@ export default function ConfirmDialog({
   variant = "danger",
   loading = false,
 }: ConfirmDialogProps) {
+  const { darkMode } = useAdminTheme();
+  const c = adminClasses(darkMode);
   if (!isOpen) return null;
 
   const handleConfirm = async () => {
@@ -54,19 +58,19 @@ export default function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-title"
         aria-describedby="confirm-message"
-        className="relative w-full max-w-sm rounded border border-slate-600/50 bg-[#252945] p-6 shadow-2xl"
+        className={`relative w-full max-w-sm rounded border p-6 shadow-2xl ${c.cardMuted}`}
       >
         <div className="flex flex-col items-center gap-4">
           <div
-            className={`flex h-14 w-14 shrink-0 items-center justify-center rounded ring-4 ring-offset-2 ring-offset-[#1e2139] ${accentClasses[variant]}`}
+            className={`flex h-14 w-14 shrink-0 items-center justify-center rounded ring-4 ring-offset-2 ${darkMode ? "ring-offset-[#1e2139]" : "ring-offset-white"} ${accentClasses[variant]}`}
           >
             <AlertTriangle className="h-7 w-7" strokeWidth={2} />
           </div>
           <div className="space-y-1 text-center">
-            <h2 id="confirm-title" className="text-lg font-bold text-white">
+            <h2 id="confirm-title" className={`text-lg font-bold ${c.title}`}>
               {title}
             </h2>
-            <p id="confirm-message" className="text-sm text-slate-400">
+            <p id="confirm-message" className={`text-sm ${c.muted}`}>
               {message}
             </p>
           </div>
@@ -75,7 +79,7 @@ export default function ConfirmDialog({
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="flex-1 rounded border border-slate-600 px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-700/50 hover:text-white disabled:opacity-50"
+              className={`flex-1 rounded border px-4 py-2.5 text-sm font-medium transition disabled:opacity-50 ${c.btnSecondary}`}
             >
               {cancelLabel}
             </button>
@@ -83,7 +87,7 @@ export default function ConfirmDialog({
               type="button"
               onClick={handleConfirm}
               disabled={loading}
-              className={`flex-1 rounded px-4 py-2.5 text-sm font-medium text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#1e2139] disabled:opacity-50 ${buttonClasses[variant]}`}
+              className={`flex-1 rounded px-4 py-2.5 text-sm font-medium text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 ${darkMode ? "focus:ring-offset-[#1e2139]" : "focus:ring-offset-white"} ${buttonClasses[variant]}`}
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">

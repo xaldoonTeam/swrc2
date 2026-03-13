@@ -6,6 +6,16 @@ import { uploadImage, getFileUrl } from "../utils/upload.js";
 const router = Router();
 const prisma = new PrismaClient();
 
+/** Normalize YouTube value to 11-char video ID only (handles full URLs). */
+function normalizeYoutubeId(value: string | null | undefined): string | null {
+  if (!value || typeof value !== "string") return null;
+  const t = value.trim();
+  if (!t) return null;
+  const fromUrl = t.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/)?.[1]
+    ?? t.match(/^([A-Za-z0-9_-]{11})$/)?.[1];
+  return fromUrl ?? null;
+}
+
 // ----- Public -----
 router.get("/", async (_req, res) => {
   const list = await prisma.mediaItem.findMany({
@@ -30,7 +40,7 @@ router.post("/", requireAuth, requireAdmin, uploadImage.single("thumbnail"), asy
   const duration = body.duration?.trim() || null;
   const views = parseInt(body.views, 10) || 0;
   const date = body.date?.trim() || null;
-  const youtubeId = body.youtubeId?.trim() || null;
+  const youtubeId = normalizeYoutubeId(body.youtubeId) ?? null;
   const mediaType = (body.mediaType?.trim() || "video") as "video" | "photo";
   const sortOrder = parseInt(body.sortOrder, 10) || 0;
 
@@ -87,7 +97,7 @@ router.put("/:id", requireAuth, requireAdmin, uploadImage.single("thumbnail"), a
   const duration = body.duration?.trim() || null;
   const views = parseInt(body.views, 10) ?? existing.views;
   const date = body.date?.trim() || null;
-  const youtubeId = body.youtubeId?.trim() || null;
+  const youtubeId = body.youtubeId !== undefined ? (normalizeYoutubeId(body.youtubeId) ?? null) : existing.youtubeId;
   const mediaType = (body.mediaType?.trim() || existing.mediaType) as "video" | "photo";
   const sortOrder = parseInt(body.sortOrder, 10) ?? existing.sortOrder;
 

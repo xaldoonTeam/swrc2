@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { X, Upload, Loader2 } from "lucide-react";
-import { apiForm } from "../../Api/client";
+import { apiForm, extractYoutubeVideoId } from "../../Api/client";
 import type { MediaItem } from "../../Api/client";
 
 const TYPES = ["Documentary", "Interview", "Photo", "Video", "Report", "Other"];
@@ -91,7 +91,8 @@ export default function AddMediaModal({ isOpen, onClose, onSuccess, media }: Add
       form.append("duration", duration.trim());
       form.append("views", views);
       form.append("date", date.trim());
-      form.append("youtubeId", youtubeId.trim());
+      const normalizedYoutubeId = extractYoutubeVideoId(youtubeId) ?? (youtubeId.trim() || "");
+      form.append("youtubeId", normalizedYoutubeId);
       form.append("mediaType", mediaType);
       form.append("sortOrder", sortOrder);
       if (thumbnail) form.append("thumbnail", thumbnail);

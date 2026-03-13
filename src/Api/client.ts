@@ -146,6 +146,7 @@ export interface Program {
   slug: string;
   description: string;
   iconName?: string | null;
+  imageUrls?: string[];
   sortOrder: number;
   createdAt: string;
   updatedAt: string;
@@ -234,4 +235,15 @@ export function assetUrl(path: string | null | undefined): string {
   if (path.startsWith("http")) return path;
   const base = getApiBaseUrl();
   return base ? `${base}${path.startsWith("/") ? path : `/${path}`}` : path;
+}
+
+/** Extract YouTube video ID from a full URL or return the value if it's already an 11-char ID. */
+export function extractYoutubeVideoId(value: string | null | undefined): string | null {
+  if (!value || typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const fromUrl =
+    trimmed.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/)?.[1] ??
+    trimmed.match(/^([A-Za-z0-9_-]{11})$/)?.[1];
+  return fromUrl ?? null;
 }

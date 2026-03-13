@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { getMe, updateProfile } from "../../Api/client";
 import type { AuthUser } from "../../Api/client";
 import { Loader2, Save, User, Lock, Mail } from "lucide-react";
+import { useAdminTheme } from "../../contexts/AdminThemeContext";
+import { adminClasses } from "../../lib/adminTheme";
 
 export default function AdminProfile() {
+  const { darkMode } = useAdminTheme();
+  const c = adminClasses(darkMode);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -65,21 +69,21 @@ export default function AdminProfile() {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
         <Loader2 className="w-10 h-10 text-orange-400 animate-spin" />
-        <p className="text-gray-400">Loading profile…</p>
+        <p className={c.loading}>Loading profile…</p>
       </div>
     );
   }
 
   return (
-    <div className="text-gray-100 space-y-6 max-w-xl">
+    <div className={`${c.page} space-y-6 max-w-xl`}>
       <div>
-        <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+        <h1 className={`text-2xl font-bold flex items-center gap-2 ${c.title}`}>
           <span className="w-10 h-10 rounded bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0">
             <User className="w-5 h-5" />
           </span>
           Profile
         </h1>
-        <p className="text-gray-400 mt-1 text-sm">
+        <p className={`${c.subtitle} mt-1 text-sm`}>
           Edit your email and password.
         </p>
       </div>
@@ -92,9 +96,9 @@ export default function AdminProfile() {
           <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 text-sm">{success}</div>
         )}
 
-        <div className="rounded bg-[#252945] border border-slate-700/50 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-700/50">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className={`rounded border overflow-hidden ${c.cardMuted}`}>
+          <div className={`px-6 py-4 border-b ${darkMode ? "border-slate-700/50" : "border-slate-200"}`}>
+            <h2 className={`text-lg font-semibold flex items-center gap-2 ${c.title}`}>
               <Mail className="w-5 h-5 text-orange-400" />
               Email
             </h2>
@@ -112,9 +116,9 @@ export default function AdminProfile() {
           </div>
         </div>
 
-        <div className="rounded bg-[#252945] border border-slate-700/50 overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-700/50">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <div className={`rounded border overflow-hidden ${c.cardMuted}`}>
+          <div className={`px-6 py-4 border-b ${darkMode ? "border-slate-700/50" : "border-slate-200"}`}>
+            <h2 className={`text-lg font-semibold flex items-center gap-2 ${c.title}`}>
               <Lock className="w-5 h-5 text-orange-400" />
               Change password
             </h2>

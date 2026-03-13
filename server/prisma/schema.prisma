@@ -69,6 +69,7 @@ model Program {
   slug        String   @unique
   description String   @db.Text
   iconName    String?  @map("icon_name") // Lucide icon name, e.g. "Users", "GraduationCap"
+  imageUrls   String[] @default([]) @map("image_urls") // up to 10 images when admin creates/edits
   sortOrder   Int      @default(0) @map("sort_order")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")

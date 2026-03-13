@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { api, assetUrl, type MediaItem } from "../../Api/client";
+import { api, assetUrl, extractYoutubeVideoId, type MediaItem } from "../../Api/client";
 import AddMediaModal from "./AddMediaModal";
+import { useAdminTheme } from "../../contexts/AdminThemeContext";
+import { adminClasses } from "../../lib/adminTheme";
 import ConfirmDialog from "../../components/ui/confirm-dialog";
 import {
   DropdownMenu,
@@ -30,17 +32,21 @@ function fetchList(setList: (v: MediaItem[]) => void) {
 
 function getThumbnailUrl(m: MediaItem): string | null {
   if (m.thumbnailUrl) return assetUrl(m.thumbnailUrl);
-  if (m.youtubeId) return `https://img.youtube.com/vi/${m.youtubeId}/mqdefault.jpg`;
+  const id = extractYoutubeVideoId(m.youtubeId);
+  if (id) return `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
   return null;
 }
 
 function getViewUrl(m: MediaItem): string | null {
-  if (m.youtubeId) return `https://www.youtube.com/watch?v=${m.youtubeId}`;
+  const id = extractYoutubeVideoId(m.youtubeId);
+  if (id) return `https://www.youtube.com/watch?v=${id}`;
   if (m.fileUrl) return assetUrl(m.fileUrl);
   return null;
 }
 
 export default function AdminMedia() {
+  const { darkMode } = useAdminTheme();
+  const c = adminClasses(darkMode);
   const [list, setList] = useState<MediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -87,14 +93,14 @@ export default function AdminMedia() {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
         <Loader2 className="w-10 h-10 text-orange-400 animate-spin" />
-        <p className="text-gray-400">Loading media…</p>
+        <p className={c.loading}>Loading media…</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-6 text-red-400">
+      <div className={`rounded-2xl p-6 ${c.error}`}>
         <p className="font-medium">Couldn&apos;t load media</p>
         <p className="text-sm mt-1 opacity-90">{error}</p>
       </div>
@@ -102,7 +108,7 @@ export default function AdminMedia() {
   }
 
   return (
-    <div className="text-gray-100 space-y-6">
+    <div className={`${c.page} space-y-6`}>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-2">
@@ -110,8 +116,8 @@ export default function AdminMedia() {
             <Video className="w-5 h-5" />
           </span>
           <div>
-            <h1 className="text-2xl font-bold text-white">Media</h1>
-            <p className="text-gray-400 -mt-1 text-sm">
+            <h1 className={`text-2xl font-bold ${c.title}`}>Media</h1>
+            <p className={`${c.subtitle} -mt-1 text-sm`}>
               Manage photo and video gallery.
             </p>
           </div>
@@ -130,26 +136,26 @@ export default function AdminMedia() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+        <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${c.muted}`} />
         <input
           type="text"
           placeholder="Search by title, type or description…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-2 rounded bg-[#252945] border border-slate-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition"
+          className={`w-full pl-12 pr-4 py-2 rounded border focus:outline-none focus:ring-2 transition ${c.input}`}
         />
       </div>
 
       {/* Content */}
       {filtered.length === 0 ? (
-        <div className="rounded bg-[#252945] border border-slate-700/50 border-dashed p-12 text-center">
-          <div className="w-16 h-16 rounded bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-            <Inbox className="w-8 h-8 text-gray-500" />
+        <div className={`rounded border border-dashed p-12 text-center ${c.emptyState}`}>
+          <div className={`w-16 h-16 rounded flex items-center justify-center mx-auto mb-4 ${c.emptyIcon}`}>
+            <Inbox className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-white mb-1">
+          <h3 className={`text-lg font-semibold mb-1 ${c.emptyTitle}`}>
             {list.length === 0 ? "No media yet" : "No matches"}
           </h3>
-          <p className="text-gray-400 text-sm max-w-sm mx-auto mb-6">
+          <p className={`${c.emptySubtitle} text-sm max-w-sm mx-auto mb-6`}>
             {list.length === 0
               ? "Add your first video or photo. YouTube embeds and thumbnails supported."
               : "Try a different search term."}
@@ -173,9 +179,9 @@ export default function AdminMedia() {
             return (
               <article
                 key={m.id}
-                className="group rounded-xl bg-[#252945] border border-slate-700/50 hover:border-orange-500/30 transition overflow-hidden flex flex-col"
+                className={`group rounded border transition overflow-hidden flex flex-col ${c.card}`}
               >
-                <div className="relative aspect-video bg-slate-800/50 overflow-hidden">
+                <div className={`relative aspect-video overflow-hidden ${darkMode ? "bg-slate-800/50" : "bg-slate-100"}`}>
                   {thumbUrl ? (
                     <img
                       src={thumbUrl}
@@ -183,11 +189,11 @@ export default function AdminMedia() {
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-500">
-                      <Image className="w-12 h-12" />
+                    <div className={`w-full h-full flex items-center justify-center ${c.muted}`}>
+                      <Image className="w-10 h-10" />
                     </div>
                   )}
-                  {m.youtubeId && (
+                  {extractYoutubeVideoId(m.youtubeId) && (
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-14 h-14 rounded-full bg-red-600/90 flex items-center justify-center text-white">
                         <Play className="w-7 h-7 ml-1 fill-white" />
@@ -199,24 +205,23 @@ export default function AdminMedia() {
                       <DropdownMenuTrigger asChild>
                         <button
                           type="button"
-                          className="p-2 rounded-lg bg-black/50 text-white/90 hover:bg-black/70 hover:text-white transition shrink-0"
+                          className="p-2 rounded bg-black/50 text-white/90 hover:bg-black/70 hover:text-white transition shrink-0"
                           title="More options"
                         >
                           <MoreVertical className="w-4 h-4" />
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="min-w-[140px]">
+                      <DropdownMenuContent align="end" className="min-w-[140px] rounded">
                         {viewUrl ? (
-                          <DropdownMenuItem asChild>
-                            <a
-                              href={viewUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-2"
-                            >
-                              <Eye className="w-4 h-4 shrink-0" />
-                              View
-                            </a>
+                          <DropdownMenuItem
+                            onSelect={(e) => {
+                              e.preventDefault();
+                              window.open(viewUrl, "_blank", "noopener,noreferrer");
+                            }}
+                            className="flex items-center gap-2 cursor-pointer"
+                          >
+                            <Eye className="w-4 h-4 shrink-0" />
+                            View
                           </DropdownMenuItem>
                         ) : (
                           <DropdownMenuItem disabled className="flex items-center gap-2">
@@ -235,19 +240,19 @@ export default function AdminMedia() {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                  <span className="absolute top-2 left-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800/90 text-slate-200">
+                  <span className={`absolute top-2 left-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${c.badge}`}>
                     {m.type}
                   </span>
                 </div>
                 <div className="p-4 flex-1 flex flex-col">
-                  <h3 className="font-semibold text-white truncate mb-1">{m.title}</h3>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 mb-2">
+                  <h3 className={`font-semibold truncate mb-1 ${c.title}`}>{m.title}</h3>
+                  <div className={`flex flex-wrap items-center gap-2 text-xs mb-2 ${c.muted}`}>
                     {m.duration && <span>{m.duration}</span>}
                     {m.views > 0 && <span>{m.views} views</span>}
                     {m.date && <span>{m.date}</span>}
                   </div>
                   {m.description && (
-                    <p className="text-gray-500 text-sm line-clamp-2 mt-auto">{m.description}</p>
+                    <p className={`text-sm line-clamp-2 mt-auto ${c.muted}`}>{m.description}</p>
                   )}
                 </div>
               </article>

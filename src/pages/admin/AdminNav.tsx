@@ -33,12 +33,12 @@ export default function AdminNav({ title = "Dashboard", onToggleSidebar, darkMod
           </svg>
         </button>
       )}
-      <h1 className="text-lg font-semibold text-white">{title}</h1>
+      <h1 className={`text-lg font-semibold ${darkMode ? "text-white" : "text-gray-900"}`}>{title}</h1>
      
       <div className="flex items-center gap-2">
       <div className="flex-1 max-w-xl">
         <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-orange-400 transition" />
+          <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 transition ${darkMode ? "text-slate-500" : "text-slate-400"} group-focus-within:text-orange-400`} />
           <input
             type="text"
             placeholder="Search anything..."
@@ -48,11 +48,11 @@ export default function AdminNav({ title = "Dashboard", onToggleSidebar, darkMod
           />
         </div>
       </div>
-        <div className="flex rounded bg-white/5 p-1 gap-0.5 border border-white/10">
+        <div className={`flex rounded p-1 gap-0.5 border ${darkMode ? "bg-white/5 border-white/10" : "bg-slate-100 border-slate-200"}`}>
           <button
             type="button"
             onClick={() => setDarkMode(false)}
-            className={`p-2 rounded transition ${!darkMode ? "bg-amber-400/20 text-amber-400" : "text-slate-500 hover:text-slate-300"}`}
+            className={`p-2 rounded transition ${!darkMode ? "bg-amber-400/20 text-amber-600" : "text-slate-500 hover:text-slate-300"}`}
             title="Light mode"
           >
             <Sun className="w-4 h-4" />
@@ -60,7 +60,7 @@ export default function AdminNav({ title = "Dashboard", onToggleSidebar, darkMod
           <button
             type="button"
             onClick={() => setDarkMode(true)}
-            className={`p-2 rounded transition ${darkMode ? "bg-amber-400/20 text-amber-400" : "text-slate-500 hover:text-slate-300"}`}
+            className={`p-2 rounded transition ${darkMode ? "bg-amber-400/20 text-amber-400" : "text-slate-500 hover:text-slate-700"}`}
             title="Dark mode"
           >
             <Moon className="w-4 h-4" />
@@ -68,7 +68,7 @@ export default function AdminNav({ title = "Dashboard", onToggleSidebar, darkMod
         </div>
         <button
           type="button"
-          className={`relative p-2.5 rounded bg-orange-500 transition ${darkMode ? "hover:bg-white/5 text-slate-400 hover:text-white" : "hover:bg-slate-100 text-slate-500"}`}
+          className={`relative p-2.5 rounded transition ${darkMode ? "hover:bg-white/5 text-slate-400 hover:text-white" : "hover:bg-slate-200 text-slate-500 bg-slate-100"}`}
           title="Notifications"
         >
           <Bell className="w-5 h-5" />

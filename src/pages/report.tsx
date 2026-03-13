@@ -9,7 +9,7 @@ const ReportCard = ({ title, year, type, description, downloads, pages, fileSize
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
     viewport={{ once: true }}
-    className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group"
+    className="bg-white rounded overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 group"
   >
     <div className="md:flex">
       <div className="md:w-1/3 bg-orange-50 p-8 flex items-center justify-center">
@@ -68,7 +68,7 @@ const ReportCard = ({ title, year, type, description, downloads, pages, fileSize
             <a
               href={fileUrl ? assetUrl(fileUrl) : '#'}
               download
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${fileUrl ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+              className={`flex items-center gap-2 px-4 py-2 rounded transition-colors ${fileUrl ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
             >
               <Download size={16} />
               Download PDF
@@ -152,14 +152,14 @@ const ReportsPage: React.FC = () => {
 
       {/* Search and Filter */}
       <div className="max-w-7xl mx-auto px-6 -mt-16">
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-12">
+        <div className="bg-white rounded shadow-lg p-6 mb-12">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             <div className="relative flex-grow max-w-2xl">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search reports by title or keyword..."
-                className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -168,7 +168,7 @@ const ReportsPage: React.FC = () => {
             <div className="flex gap-4">
               <div className="relative">
                 <select 
-                  className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="appearance-none bg-white border border-gray-300 rounded px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
                 >
@@ -181,7 +181,7 @@ const ReportsPage: React.FC = () => {
                 <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               </div>
               
-              <button className="flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-slate-600 transition-colors">
+              <button className="flex items-center gap-2 px-6 py-2 bg-orange-500 text-white rounded hover:bg-slate-600 transition-colors">
                 <Filter size={16} />
                 Filter
               </button>
@@ -235,7 +235,7 @@ const ReportsPage: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-12 text-white"
+          className="mt-20 bg-gradient-to-r from-orange-500 to-orange-600 rounded p-12 text-white"
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
@@ -259,7 +259,7 @@ const ReportsPage: React.FC = () => {
 
         {/* Newsletter CTA */}
         <div className="mt-20 text-center">
-          <div className="bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
+          <div className="bg-white rounded p-8 shadow-lg max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Get Reports Delivered to Your Inbox
             </h3>
@@ -270,9 +270,9 @@ const ReportsPage: React.FC = () => {
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-grow px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="flex-grow px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
-              <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-500 transition-colors">
+              <button className="bg-orange-500 text-white px-6 py-2 rounded font-semibold hover:bg-orange-500 transition-colors">
                 Subscribe
               </button>
             </div>

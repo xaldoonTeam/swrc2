@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { api, assetUrl, type Publication } from "../../Api/client";
 import AddPublicationModal from "./AddPublicationModal";
+import { useAdminTheme } from "../../contexts/AdminThemeContext";
+import { adminClasses } from "../../lib/adminTheme";
 import ConfirmDialog from "../../components/ui/confirm-dialog";
 import {
   DropdownMenu,
@@ -33,6 +35,8 @@ function fetchList(setList: (v: Publication[]) => void) {
 }
 
 export default function AdminPublications() {
+  const { darkMode } = useAdminTheme();
+  const c = adminClasses(darkMode);
   const [list, setList] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -88,14 +92,14 @@ export default function AdminPublications() {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
         <Loader2 className="w-10 h-10 text-orange-400 animate-spin" />
-        <p className="text-gray-400">Loading publications…</p>
+        <p className={c.loading}>Loading publications…</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-6 text-red-400">
+      <div className={`rounded-2xl p-6 ${c.error}`}>
         <p className="font-medium">Couldn’t load publications</p>
         <p className="text-sm mt-1 opacity-90">{error}</p>
       </div>
@@ -103,21 +107,19 @@ export default function AdminPublications() {
   }
 
   return (
-    <div className="text-gray-100 space-y-6">
+    <div className={`${c.page} space-y-6`}>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <span className="w-10 h-10 rounded bg-orange-500/20 flex items-center justify-center text-orange-400">
-              <BookOpen className="w-5 h-5" />
-            </span>
-          </h1>
-         <div>
-         <h1 className="text-2xl font-bold text-white"> Publications</h1>
-          <p className="text-gray-400 -mt-1 text-sm">
-            Reports, policy briefs &amp; annual documents. Upload PDFs and manage visibility.
-          </p>
-         </div>
+          <span className="w-10 h-10 rounded bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0">
+            <BookOpen className="w-5 h-5" />
+          </span>
+          <div>
+            <h1 className={`text-2xl font-bold ${c.title}`}>Publications</h1>
+            <p className={`${c.subtitle} -mt-1 text-sm`}>
+              Reports, policy briefs &amp; annual documents. Upload PDFs and manage visibility.
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           {/* <span className="text-sm text-gray-400">
@@ -138,26 +140,26 @@ export default function AdminPublications() {
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+        <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${c.muted}`} />
         <input
           type="text"
           placeholder="Search by title or type…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-2 rounded bg-[#252945] border border-slate-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition"
+          className={`w-full pl-12 pr-4 py-2 rounded border focus:outline-none focus:ring-2 transition ${c.input}`}
         />
       </div>
 
       {/* Content */}
       {filtered.length === 0 ? (
-        <div className="rounded bg-[#252945] border border-slate-700/50 border-dashed p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-            <Inbox className="w-8 h-8 text-gray-500" />
+        <div className={`rounded border border-dashed p-12 text-center ${c.emptyState}`}>
+          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${c.emptyIcon}`}>
+            <Inbox className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-white mb-1">
+          <h3 className={`text-lg font-semibold mb-1 ${c.emptyTitle}`}>
             {list.length === 0 ? "No publications yet" : "No matches"}
           </h3>
-          <p className="text-gray-400 text-sm max-w-sm mx-auto mb-6">
+          <p className={`${c.emptySubtitle} text-sm max-w-sm mx-auto mb-6`}>
             {list.length === 0
               ? "Add your first report or policy brief. PDF upload is supported."
               : "Try a different search term."}
@@ -178,7 +180,7 @@ export default function AdminPublications() {
           {filtered.map((p) => (
             <article
               key={p.id}
-              className="group rounded bg-[#252945] border border-slate-700/50 hover:border-orange-500/30 transition overflow-hidden"
+              className={`group rounded border transition overflow-hidden ${c.card}`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-5">
                 <div className="flex-shrink-0 w-14 h-14 rounded bg-orange-500/10 flex items-center justify-center text-orange-400 group-hover:bg-orange-500/20 transition">
@@ -186,7 +188,7 @@ export default function AdminPublications() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-white truncate">{p.title}</h3>
+                    <h3 className={`font-semibold truncate ${c.title}`}>{p.title}</h3>
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         p.published
@@ -197,9 +199,9 @@ export default function AdminPublications() {
                       {p.published ? "Published" : "Draft"}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400">
+                  <div className={`flex flex-wrap items-center gap-3 text-sm ${c.muted}`}>
                     <span className="flex items-center gap-1">
-                      <span className="text-gray-500">Type</span>
+                      <span>Type</span>
                       {p.type}
                     </span>
                     <span className="flex items-center gap-1">
@@ -214,7 +216,7 @@ export default function AdminPublications() {
                     )}
                   </div>
                   {p.description && (
-                    <p className="text-gray-500 text-sm mt-2 line-clamp-2">{p.description}</p>
+                    <p className={`text-sm mt-2 line-clamp-2 ${c.muted}`}>{p.description}</p>
                   )}
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
@@ -224,7 +226,7 @@ export default function AdminPublications() {
                         href={assetUrl(p.fileUrl)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2.5 rounded-xl text-gray-400 hover:text-orange-400 hover:bg-orange-500/10 transition"
+                        className={`p-2.5 rounded-xl transition hover:text-orange-500 hover:bg-orange-500/10 ${c.muted}`}
                         title="Preview"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -232,7 +234,7 @@ export default function AdminPublications() {
                       <a
                         href={assetUrl(p.fileUrl)}
                         download
-                        className="p-2.5 rounded-xl text-gray-400 hover:text-orange-400 hover:bg-orange-500/10 transition"
+                        className={`p-2.5 rounded-xl transition hover:text-orange-500 hover:bg-orange-500/10 ${c.muted}`}
                         title="Download PDF"
                       >
                         <Download className="w-4 h-4" />
@@ -243,7 +245,7 @@ export default function AdminPublications() {
                     <DropdownMenuTrigger asChild>
                       <button
                         type="button"
-                        className="p-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-slate-700/50 transition"
+                        className={`p-2.5 rounded-xl transition ${c.muted} ${darkMode ? "hover:text-white hover:bg-slate-700/50" : "hover:text-gray-900 hover:bg-slate-100"}`}
                         title="More options"
                       >
                         <MoreVertical className="w-4 h-4" />

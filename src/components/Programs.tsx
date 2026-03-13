@@ -33,7 +33,7 @@ const ProgramCard = ({ icon: Icon, title, desc, index }: any) => {
         scale: 1.05,
         transition: { duration: 0.3 }
       }}
-      className="relative bg-white p-8 rounded-lg shadow-lg text-center flex flex-col items-center max-w-sm cursor-pointer group overflow-hidden"
+      className="relative bg-white p-8 rounded shadow-lg text-center flex flex-col items-center max-w-sm cursor-pointer group overflow-hidden"
     >
       <motion.div 
         className="bg-orange-100 p-4 rounded-md mb-4 text-orange-600 group-hover:bg-orange-500 transition-colors duration-300"

@@ -75,7 +75,7 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
       <div className="p-2 ">
         <Link
           to="/admin/dashboard"
-          className="block p-2 rounded hover:bg-white/5 active:scale-[0.98] transition"
+          className={`block p-2 rounded active:scale-[0.98] transition ${darkMode ? "hover:bg-white/5" : "hover:bg-slate-100"}`}
         >
           <AdminLogo size="sm" showWordmark />
         </Link>
@@ -94,7 +94,7 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
       </div>
 
       <nav className="flex-1 px-3 py-2 overflow-auto">
-        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-3 mb-3">Menu</div>
+        <div className={`text-[10px] font-bold uppercase tracking-widest px-3 mb-3 ${darkMode ? "text-slate-500" : "text-slate-400"}`}>Menu</div>
         <div className="space-y-1">
           {navItems.map(({ to, label, icon: Icon }) => (
             <Link
@@ -108,7 +108,7 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
                     : "text-slate-600 hover:bg-gray-100"
               }`}
             >
-              <span className={`w-7 h-7 rounded flex items-center justify-center shrink-0 ${isActive(to) ? "bg-white/20" : "bg-white/5"}`}>
+              <span className={`w-7 h-7 rounded flex items-center justify-center shrink-0 ${isActive(to) ? "bg-white/20" : darkMode ? "bg-white/5" : "bg-slate-100"}`}>
                 <Icon className="w-4 h-4" />
               </span>
               <span className="font-medium text-sm">{label}</span>
@@ -117,28 +117,25 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
         </div>
       </nav>
 
-      <div className="p-2 border-t border-white/5 space-y-2">
-     
-        <Link
-          to="/admin/profile"
-          className="flex items-center gap-3 p-1 rounded bg-white/5 border border-white/5 hover:bg-white/10 transition min-w-0"
-        >
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-orange-500/20 ring-2 ring-white/10 shrink-0">
-            <FaUser />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="font-semibold text-white text-sm truncate">Admin</div>
-            <div className="text-[11px] text-slate-400 truncate">{user.email ?? "admin@swrc.org"}</div>
-          </div>
-        <button
-          type="button"
-          onClick={handleLogout}
-          className=" flex items-center gap-3 px-2 py-2 rounded text-slate-400 hover:bg-rose-500/10 hover:text-rose-400 transition text-sm font-medium"
-        >
-          <LogOut className="w-4 h-4 shrink-0" />
-         
-        </button>
-        </Link>
+      <div className={`p-2 border-t space-y-2 ${darkMode ? "border-white/5" : "border-slate-200"}`}>
+        <div className={`flex items-center gap-2 p-1 rounded border min-w-0 ${darkMode ? "bg-white/5 border-white/5" : "bg-slate-50 border-slate-200"}`}>
+          <Link to="/admin/profile" className="flex items-center gap-3 flex-1 min-w-0 rounded hover:opacity-90 transition">
+            <div className="w-8 h-8 rounded bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center text-white text-sm font-bold shadow-lg shadow-orange-500/20 ring-2 ring-white/10 shrink-0">
+              <FaUser />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className={`font-semibold text-sm truncate ${darkMode ? "text-white" : "text-gray-900"}`}>Admin</div>
+              <div className={`text-[11px] truncate ${darkMode ? "text-slate-400" : "text-slate-500"}`}>{user.email ?? "admin@swrc.org"}</div>
+            </div>
+          </Link>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className={`p-2 rounded transition text-sm font-medium ${darkMode ? "text-slate-400 hover:bg-rose-500/10 hover:text-rose-400" : "text-slate-500 hover:bg-rose-50 hover:text-rose-600"}`}
+          >
+            <LogOut className="w-4 h-4 shrink-0" />
+          </button>
+        </div>
       </div>
     </aside>
   );

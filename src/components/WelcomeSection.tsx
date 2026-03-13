@@ -109,7 +109,7 @@ const WelcomeSection: React.FC = () => {
               rotate: 2,
               transition: { duration: 0.3 }
             }}
-            className="absolute top-0 left-0 w-4/5 h-4/5 overflow-hidden rounded-[2rem] shadow-xl cursor-pointer"
+            className="absolute top-0 left-0 w-4/5 h-4/5 overflow-hidden rounded-[1rem] shadow-xl cursor-pointer"
           >
             <motion.img 
               src="../../public/welcome.jpg" 
@@ -132,7 +132,7 @@ const WelcomeSection: React.FC = () => {
               zIndex: 20,
               transition: { duration: 0.3 }
             }}
-            className="absolute bottom-0 right-0 w-3/5 h-3/5 overflow-hidden rounded-[2rem] border-[10px] border-white shadow-2xl z-10 cursor-pointer"
+            className="absolute bottom-0 right-0 w-3/5 h-3/5 overflow-hidden rounded-[1rem] border-[10px] border-white shadow-2xl z-10 cursor-pointer"
           >
             <motion.img 
               src="../../public/dumar.jpg" 
@@ -191,7 +191,7 @@ const WelcomeSection: React.FC = () => {
                 viewport={{ once: true }}
                 variants={itemVariant}
                 whileHover={{ scale: 1.03, backgroundColor: "#fff" }}
-                className="flex items-center gap-3 bg-gray-50/80 p-4 md:p-5 rounded-xl border border-gray-100 shadow-sm transition-all duration-300 cursor-default"
+                className="flex items-center gap-3 bg-gray-50/80 p-3 md:p-3 rounded border border-gray-100 shadow-sm transition-all duration-300 cursor-default"
               >
                 <div className="bg-orange-500 rounded-full p-1.5 flex-shrink-0">
                   <CheckCircle2 className="w-4 h-4 text-white" />
@@ -206,12 +206,12 @@ const WelcomeSection: React.FC = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="pt-6 md:pt-8"
+            className="pt-2"
           >
             <motion.button 
               whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(249, 115, 22, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              className="bg-orange-500 text-white px-10 py-4 md:px-12 md:py-5 rounded-lg font-bold text-lg shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all duration-300"
+              className="bg-orange-500 text-white px-10 py-2 md:px-12 md:py-3 rounded font-bold text-lg shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all duration-300"
             >
               Read more
             </motion.button>

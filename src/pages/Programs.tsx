@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { programs as programsApi, type Program } from '../Api/client';
 import { getProgramIcon } from '../lib/programIcons';
 
-const ProgramCard = ({ icon: Icon, title, desc, delay }: any) => (
+const ProgramCard = ({ icon: Icon, title, desc, slug, delay }: any) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -22,7 +22,7 @@ const ProgramCard = ({ icon: Icon, title, desc, delay }: any) => (
       {desc}
     </p>
     <Link 
-      to={`/services/${title.toLowerCase().replace(/\s+/g, '-')}`}
+      to={slug ? `/programs/${slug}` : `/programs/${title.toLowerCase().replace(/\s+/g, "-")}`}
       className="text-orange-500 font-bold text-sm hover:underline flex items-center gap-2"
     >
       Learn More <span>→</span>
@@ -30,7 +30,7 @@ const ProgramCard = ({ icon: Icon, title, desc, delay }: any) => (
   </motion.div>
 );
 
-const FALLBACK_PROGRAMS = [
+const FALLBACK_PROGRAMS: { icon: typeof Users; title: string; desc: string; slug?: string }[] = [
   { icon: Users, title: "Individualized Support", desc: "We work in collaboration with each woman to create a personalized plan of action to help her move forward in her professional and personal life." },
   { icon: GraduationCap, title: "Education", desc: "Specialized workshops focusing on career readiness, financial literacy, and essential life skills for modern workplace success." },
   { icon: Lightbulb, title: "Girls Talk", desc: "Offered to women who are currently looking to transition into the Somaliland staff career practice with mentorship support." },
@@ -41,7 +41,7 @@ const FALLBACK_PROGRAMS = [
 
 const ProgramsPage: React.FC = () => {
   const navigate = useNavigate();
-  const [allPrograms, setAllPrograms] = useState<{ icon: React.ComponentType<{ size?: number; className?: string }>; title: string; desc: string }[]>([]);
+  const [allPrograms, setAllPrograms] = useState<{ icon: React.ComponentType<{ size?: number; className?: string }>; title: string; desc: string; slug?: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,9 +50,18 @@ const ProgramsPage: React.FC = () => {
     setError(null);
     programsApi
       .list()
-      .then((data: Program[]) => setAllPrograms(data.map((p) => ({ icon: getProgramIcon(p.iconName), title: p.title, desc: p.description }))))
+      .then((data: Program[]) =>
+        setAllPrograms(
+          data.map((p) => ({
+            icon: getProgramIcon(p.iconName),
+            title: p.title,
+            desc: p.description,
+            slug: p.slug,
+          }))
+        )
+      )
       .catch(() => {
-        setError('Could not load programs.');
+        setError("Could not load programs.");
         setAllPrograms(FALLBACK_PROGRAMS);
       })
       .finally(() => setLoading(false));

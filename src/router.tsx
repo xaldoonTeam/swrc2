@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import ServiceDetail from "./pages/serviceDetail";
 import Programs from "./pages/Programs";
+import ProgramDetail from "./pages/ProgramDetail";
 import StoriesPage from "./pages/StoriesPage";
 import Contact from "./pages/ContactPage";
 import ReportsPage from "./pages/report";
@@ -45,6 +46,7 @@ export const router = createBrowserRouter([
           { index: true, element: <Home /> },
           { path: "about", element: <About /> },
           { path: "programs", element: <Programs /> },
+          { path: "programs/:slug", element: <ProgramDetail /> },
           { path: "serviceDetail", element: <ServiceDetail /> },
           { path: "stories", element: <StoriesPage /> },
           { path: "contact", element: <Contact /> },

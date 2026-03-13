@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getCookie } from "../../lib/cookies";
 import { users, type AdminUser } from "../../Api/client";
 import AddUserModal from "./AddUserModal";
+import { useAdminTheme } from "../../contexts/AdminThemeContext";
+import { adminClasses } from "../../lib/adminTheme";
 import ConfirmDialog from "../../components/ui/confirm-dialog";
 import {
   DropdownMenu,
@@ -30,6 +32,8 @@ function fetchList(setList: (v: AdminUser[]) => void) {
 }
 
 export default function AdminUsers() {
+  const { darkMode } = useAdminTheme();
+  const c = adminClasses(darkMode);
   const [list, setList] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -84,14 +88,14 @@ export default function AdminUsers() {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
         <Loader2 className="w-10 h-10 text-orange-400 animate-spin" />
-        <p className="text-gray-400">Loading users…</p>
+        <p className={c.loading}>Loading users…</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-2xl bg-red-500/10 border border-red-500/30 p-6 text-red-400">
+      <div className={`rounded-2xl p-6 ${c.error}`}>
         <p className="font-medium">Couldn&apos;t load users</p>
         <p className="text-sm mt-1 opacity-90">{error}</p>
       </div>
@@ -99,15 +103,15 @@ export default function AdminUsers() {
   }
 
   return (
-    <div className="text-gray-100 space-y-6">
+    <div className={`${c.page} space-y-6`}>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-2">
           <span className="w-10 h-10 rounded bg-orange-500/20 flex items-center justify-center text-orange-400 shrink-0">
             <Users className="w-5 h-5" />
           </span>
           <div>
-            <h1 className="text-2xl font-bold text-white">Users</h1>
-            <p className="text-gray-400 -mt-1 text-sm">
+            <h1 className={`text-2xl font-bold ${c.title}`}>Users</h1>
+            <p className={`${c.subtitle} -mt-1 text-sm`}>
               Manage accounts, roles and permissions.
             </p>
           </div>
@@ -125,25 +129,25 @@ export default function AdminUsers() {
       </div>
 
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+        <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 ${c.muted}`} />
         <input
           type="text"
           placeholder="Search by email or role…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-2 rounded bg-[#252945] border border-slate-700/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition"
+          className={`w-full pl-12 pr-4 py-2 rounded border focus:outline-none focus:ring-2 transition ${c.input}`}
         />
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded bg-[#252945] border border-slate-700/50 border-dashed p-12 text-center">
-          <div className="w-16 h-16 rounded-2xl bg-slate-700/50 flex items-center justify-center mx-auto mb-4">
-            <Inbox className="w-8 h-8 text-gray-500" />
+        <div className={`rounded border border-dashed p-12 text-center ${c.emptyState}`}>
+          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${c.emptyIcon}`}>
+            <Inbox className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-semibold text-white mb-1">
+          <h3 className={`text-lg font-semibold mb-1 ${c.emptyTitle}`}>
             {list.length === 0 ? "No users yet" : "No matches"}
           </h3>
-          <p className="text-gray-400 text-sm max-w-sm mx-auto mb-6">
+          <p className={`${c.emptySubtitle} text-sm max-w-sm mx-auto mb-6`}>
             {list.length === 0
               ? "Create your first user. Only admins can access this page."
               : "Try a different search term."}
@@ -164,7 +168,7 @@ export default function AdminUsers() {
           {filtered.map((u) => (
             <article
               key={u.id}
-              className="rounded bg-[#252945] border border-slate-700/50 hover:border-orange-500/30 transition overflow-hidden"
+              className={`rounded border transition overflow-hidden ${c.card}`}
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-3">
                 <div className="flex-shrink-0 w-12 h-12 rounded bg-orange-500/10 flex items-center justify-center text-orange-400">
