@@ -86,7 +86,7 @@ const AboutPage: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <img 
-          src="public/about.jpg" 
+          src="/public/about.jpg" 
           className="absolute inset-0 w-full h-full object-cover"
           alt="Empowerment background"
         />
@@ -140,7 +140,7 @@ const AboutPage: React.FC = () => {
           className="relative"
         >
           <img 
-            src="public/herro2.jpg" 
+            src="/public/herro2.jpg" 
             className="w-full h-full rounded-2xl shadow-2xl object-cover min-h-[500px]"
             alt="SWRC Community"
           />
