@@ -1,16 +1,17 @@
 import Hero from "../components/Hero"
 import Services from "../components/Programs"
 import AlumniSection from "../components/Stories"
-import Feedback from "../components/feedback"   
+import Feedback from "../components/feedback"
 import Welcone from "../components/WelcomeSection"
-
+import PartnersSection from "../components/PartnersSection"
 
 export const Home = () => {
   return (
     <>
-      <Hero /> 
+      <Hero />
       <Welcone />
       <Services />
+      <PartnersSection />
       <AlumniSection />
       <Feedback />
     </>
