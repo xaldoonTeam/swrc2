@@ -140,11 +140,7 @@ const AboutPage: React.FC = () => {
           className="relative"
         >
           <img 
-<<<<<<< HEAD
             src="/hero.jpg" 
-=======
-            src="/public/herro2.jpg" 
->>>>>>> d16bb2ff041c704762cd4a66446b77474c9beb63
             className="w-full h-full rounded-2xl shadow-2xl object-cover min-h-[500px]"
             alt="SWRC Community"
           />
