@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/hero.jpg" 
+          src="/herro2.jpg" 
           alt="Women workplace background"
           className="w-full h-full object-cover"
         />
