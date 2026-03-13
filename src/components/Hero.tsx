@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const StatCard = ({ number, label }: { number: string; label: string }) => (
   <div className="flex flex-col items-center p-4 md:p-6">
@@ -15,7 +16,7 @@ const Hero: React.FC = () => {
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="../../public/hero.jpg" 
+          src="public/herro2.jpg" 
           alt="Women workplace background"
           className="w-full h-full object-cover"
         />
@@ -28,12 +29,12 @@ const Hero: React.FC = () => {
           Equipping women for <br className="hidden md:block" /> workplace success.
         </h1>
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
-          <button className="bg-orange-500 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition">
-            Get Start Now
-          </button>
-          <button className="border-2 border-white/60 text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-orange-600 transition">
+          <Link to="/programs" className="bg-orange-500 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition">
             View all Services
-          </button>
+          </Link>
+          {/* <Link to="/services" className="border-2 border-white/60 text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-orange-600 transition">
+            View all Services
+          </Link> */}
         </div>
       </div>
 
