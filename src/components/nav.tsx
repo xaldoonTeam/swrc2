@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -22,6 +22,7 @@ const Navbar: React.FC = () => {
   };
 
   const closeMobile = () => setMobileOpen(false);
+  const navigate = useNavigate();
 
   return (
     <nav className="flex flex-col px-6 md:px-12 py-4 bg-white shadow-sm sticky top-0 z-50">
@@ -54,7 +55,7 @@ const Navbar: React.FC = () => {
           >
             {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
-          <button className="hidden lg:block bg-orange-500 text-white px-6 py-2 rounded-md text-sm font-bold hover:bg-orange-600 transition shadow-sm">
+          <button className="hidden lg:block bg-orange-500 text-white px-6 py-2 rounded-md text-sm font-bold hover:bg-orange-600 transition shadow-sm" onClick={() => navigate('/admin/login')}>
             Login
           </button>
         </div>
