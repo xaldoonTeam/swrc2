@@ -6,10 +6,8 @@ const navLinks = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About us' },
   { to: '/programs', label: 'Programs' },
-  { to: '/report', label: 'Publications' },
+  { to: '/newsletters', label: 'Newsletters' },
   { to: '/research', label: 'Research' },
-  { to: '/media', label: 'Media' },
-  { to: '/stories', label: 'Stories' },
   { to: '/contact', label: 'Contact' },
 ];
 
@@ -34,7 +32,7 @@ const Navbar: React.FC = () => {
           </div>
           <div className="leading-tight">
             <h1 className="text-orange-500 font-bold text-base md:text-lg">Somaliland Women's</h1>
-            <p className="text-gray-800 font-bold text-xs md:text-sm">Resource Centre</p>
+            <p className="text-gray-800 text-center font-bold text-xs md:text-sm">Resource Centre</p>
           </div>
         </Link>
 

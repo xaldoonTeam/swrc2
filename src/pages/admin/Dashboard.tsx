@@ -3,6 +3,7 @@ import { getCookie } from "../../lib/cookies";
 import { Link } from "react-router-dom";
 import {
   FileText,
+  Mail,
   BarChart3,
   Briefcase,
   Heart,
@@ -17,6 +18,7 @@ import { useAdminTheme } from "../../contexts/AdminThemeContext";
 
 const contentSections = [
   { key: "publications", label: "Publications", to: "/admin/publications", icon: FileText, color: "from-amber-500/20 to-orange-500/20 text-amber-400" },
+  { key: "newsletters", label: "Newsletters", to: "/admin/newsletters", icon: Mail, color: "from-orange-500/20 to-amber-500/20 text-orange-400" },
   { key: "research", label: "Research", to: "/admin/research", icon: BarChart3, color: "from-blue-500/20 to-indigo-500/20 text-blue-400" },
   { key: "programs", label: "Programs", to: "/admin/programs", icon: Briefcase, color: "from-emerald-500/20 to-teal-500/20 text-emerald-400" },
   { key: "stories", label: "Stories", to: "/admin/stories", icon: Heart, color: "from-rose-500/20 to-pink-500/20 text-rose-400" },
@@ -27,6 +29,7 @@ export default function Dashboard() {
   const { darkMode } = useAdminTheme();
   const [counts, setCounts] = useState<Record<string, number>>({
     publications: 0,
+    newsletters: 0,
     research: 0,
     programs: 0,
     stories: 0,
@@ -42,6 +45,7 @@ export default function Dashboard() {
     }
     const endpoints: { key: string; path: string }[] = [
       { key: "publications", path: "/api/publications/admin/list" },
+      { key: "newsletters", path: "/api/newsletters/admin/list" },
       { key: "research", path: "/api/research/admin/list" },
       { key: "programs", path: "/api/programs/admin/list" },
       { key: "stories", path: "/api/stories/admin/list" },
@@ -89,7 +93,7 @@ export default function Dashboard() {
       {/* Metric cards */}
       <div>
         <h2 className={`text-sm font-semibold uppercase tracking-wider mb-4 ${darkMode ? "text-slate-500" : "text-slate-500"}`}>Quick access</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {contentSections.map(({ key, label, to, icon: Icon, color }) => (
             <Link
               key={key}

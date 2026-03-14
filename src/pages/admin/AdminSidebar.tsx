@@ -13,6 +13,7 @@ import {
   LogOut,
   User,
   Users,
+  Mail,
 } from "lucide-react";
 import AdminLogo from "../../components/admin/AdminLogo";
 import { FaUser } from "react-icons/fa";
@@ -20,6 +21,7 @@ import { FaUser } from "react-icons/fa";
 const baseNavItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/admin/publications", label: "Publications", icon: FileText },
+  { to: "/admin/newsletters", label: "Newsletters", icon: Mail },
   { to: "/admin/research", label: "Research", icon: BarChart3 },
   { to: "/admin/programs", label: "Programs", icon: Briefcase },
   { to: "/admin/stories", label: "Stories", icon: Heart },

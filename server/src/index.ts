@@ -11,6 +11,7 @@ import storyRoutes from "./routes/stories.js";
 import mediaRoutes from "./routes/media.js";
 import settingsRoutes from "./routes/settings.js";
 import usersRoutes from "./routes/users.js";
+import newsletterRoutes from "./routes/newsletters.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -34,6 +35,7 @@ app.use("/api/stories", storyRoutes);
 app.use("/api/media", mediaRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/users", usersRoutes);
+app.use("/api/newsletters", newsletterRoutes);
 
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", message: "SWRC API" });

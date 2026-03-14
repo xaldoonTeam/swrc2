@@ -7,6 +7,7 @@ import { AdminThemeContext, getStoredTheme, setStoredTheme } from "../../context
 const routeTitles: Record<string, string> = {
   "/admin/dashboard": "Dashboard",
   "/admin/publications": "Publications",
+  "/admin/newsletters": "Newsletters",
   "/admin/research": "Research",
   "/admin/programs": "Programs",
   "/admin/stories": "Stories",

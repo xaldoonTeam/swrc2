@@ -118,3 +118,17 @@ model MediaItem {
 
   @@map("media_items")
 }
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  summary   String?  @db.Text
+  content   String   @db.Text
+  imageUrl  String?  @map("image_url")
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("newsletters")
+}

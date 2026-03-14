@@ -206,6 +206,23 @@ export const media = {
   get: (id: string) => api<MediaItem>(`/api/media/${id}`),
 };
 
+export interface Newsletter {
+  id: string;
+  title: string;
+  slug: string;
+  summary?: string | null;
+  content: string;
+  imageUrl?: string | null;
+  published: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export const newsletters = {
+  list: () => api<Newsletter[]>("/api/newsletters"),
+  get: (idOrSlug: string) => api<Newsletter>(`/api/newsletters/${idOrSlug}`),
+};
+
 export interface SiteSettings {
   about_hero?: string;
   about_swrc_text?: string;

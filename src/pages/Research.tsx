@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BarChart3, Download, Users, Target, Calendar, FileText, Filter, Search, BookOpen, Loader2 } from 'lucide-react';
 import { research as researchApi, assetUrl, type Research as ResearchType } from '../Api/client';
+import { useNavigate } from 'react-router-dom';
 
 const ResearchCard = ({ title, authors, year, abstract, keywords, methodology, downloads, category, pdfUrl }: any) => (
   <motion.div 
@@ -132,6 +133,7 @@ const ResearchPage: React.FC = () => {
   });
 
   const displayList = loading ? [] : filteredResearch;
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -154,20 +156,20 @@ const ResearchPage: React.FC = () => {
 
       {/* Search and Filter */}
       <div className="max-w-7xl mx-auto px-6 -mt-16">
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-12">
+        <div className="bg-white rounded shadow-lg p-6 mb-12">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
             <div className="relative flex-grow max-w-2xl">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search research papers, authors, or keywords..."
-                className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
             
-            <button className="flex items-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+            <button className="flex items-center gap-2 px-6 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors">
               <Filter size={16} />
               Filter Research
             </button>
@@ -178,7 +180,7 @@ const ResearchPage: React.FC = () => {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-full text-xs font-medium transition-colors ${
                   selectedCategory === category 
                     ? 'bg-orange-500 text-white' 
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -193,11 +195,16 @@ const ResearchPage: React.FC = () => {
 
       {/* Research Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
-        <div className="mb-12">
+        <div className="mb-12 flex items-center justify-between">
+          <div>
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Research Studies</h2>
           <p className="text-gray-600">
             Access our evidence-based research contributing to knowledge on women's empowerment and development.
           </p>
+          </div>
+          <div>
+            <button onClick={() => navigate('/report')} className="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition shadow-sm">Publications</button>
+          </div>
         </div>
 
         {loading && (
@@ -220,7 +227,7 @@ const ResearchPage: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 bg-gradient-to-r from-orange-500 to-slate-800 rounded-2xl p-12 text-white"
+          className="mt-20 bg-gradient-to-r from-orange-500 to-slate-800 rounded p-12 text-white"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
@@ -246,7 +253,7 @@ const ResearchPage: React.FC = () => {
               <p className="text-orange-100 mb-4">
                 We collaborate with universities, research institutions, and development organizations to conduct rigorous, impactful research.
               </p>
-              <button className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors">
+              <button className="bg-white text-orange-600 px-6 py-2 rounded font-semibold hover:bg-orange-50 transition-colors">
                 Partner With Us
               </button>
             </div>
@@ -257,7 +264,7 @@ const ResearchPage: React.FC = () => {
         <div className="mt-20">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Our Research Methodology</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-2xl shadow-sm">
+            <div className="bg-white p-6 rounded shadow-sm">
               <div className="text-orange-500 mb-4">
                 <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
@@ -269,7 +276,7 @@ const ResearchPage: React.FC = () => {
               </p>
             </div>
             
-            <div className="bg-white p-6 rounded-2xl shadow-sm">
+            <div className="bg-white p-6 rounded shadow-sm">
               <div className="text-orange-500 mb-4">
                 <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -281,7 +288,7 @@ const ResearchPage: React.FC = () => {
               </p>
             </div>
             
-            <div className="bg-white p-6 rounded-2xl shadow-sm">
+            <div className="bg-white p-6 rounded shadow-sm">
               <div className="text-orange-500 mb-4">
                 <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6.625 2.655A9 9 0 0119 11a1 1 0 11-2 0 7 7 0 00-9.625-6.492 1 1 0 11-.75-1.853zM4.662 4.959A1 1 0 014.75 6.37 6.97 6.97 0 003 11a1 1 0 11-2 0 8.97 8.97 0 012.25-5.953 1 1 0 011.412-.088z" clipRule="evenodd" />

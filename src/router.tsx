@@ -13,6 +13,8 @@ import Contact from "./pages/ContactPage";
 import ReportsPage from "./pages/report";
 import ResearchPage from "./pages/Research";
 import MediaPage from "./pages/Media";
+import NewsletterPage from "./pages/NewsletterPage";
+import NewsletterDetail from "./pages/NewsletterDetail";
 
 // Admin
 import RequireAdmin from "./pages/admin/RequireAdmin";
@@ -20,6 +22,7 @@ import AdminLayout from "./pages/admin/AdminLayout";
 import AdminLogin from "./pages/admin/AdminLogin";
 import Dashboard from "./pages/admin/Dashboard";
 import AdminPublications from "./pages/admin/AdminPublications";
+import AdminNewsletter from "./pages/admin/AdminNewsletter";
 import AdminResearch from "./pages/admin/AdminResearch";
 import AdminPrograms from "./pages/admin/AdminPrograms";
 import AdminStories from "./pages/admin/AdminStories";
@@ -54,6 +57,8 @@ export const router = createBrowserRouter([
           { path: "contact", element: <Contact /> },
           { path: "report", element: <ReportsPage /> },
           { path: "research", element: <ResearchPage /> },
+          { path: "newsletters", element: <NewsletterPage /> },
+          { path: "newsletters/:slug", element: <NewsletterDetail /> },
           { path: "media", element: <MediaPage /> },
           { path: "*", element: <div className="p-8 text-center text-gray-500">Not Found</div> },
         ],
@@ -72,6 +77,7 @@ export const router = createBrowserRouter([
               { index: true, element: <Navigate to="/admin/dashboard" replace /> },
               { path: "dashboard", element: <Dashboard /> },
               { path: "publications", element: <AdminPublications /> },
+              { path: "newsletters", element: <AdminNewsletter /> },
               { path: "research", element: <AdminResearch /> },
               { path: "programs", element: <AdminPrograms /> },
               { path: "stories", element: <AdminStories /> },
