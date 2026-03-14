@@ -4,6 +4,7 @@ import AlumniSection from "../components/Stories"
 import Feedback from "../components/feedback"
 import Welcone from "../components/WelcomeSection"
 import PartnersSection from "../components/PartnersSection"
+import BlogSection from "../components/Blog"
 
 export const Home = () => {
   return (
@@ -13,7 +14,8 @@ export const Home = () => {
       <Programs />
       <PartnersSection />
       <AlumniSection />
-      <Feedback />
+      {/* <Feedback /> */}
+      {/* <BlogSection /> */}
     </>
   );
 };

@@ -16,7 +16,7 @@ const Hero: React.FC = () => {
       {/* Background Image & Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/herro2.jpg" 
+          src="/im.jpg" 
           alt="Women workplace background"
           className="w-full h-full object-cover"
         />
@@ -25,8 +25,8 @@ const Hero: React.FC = () => {
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl">
-        <h1 className="text-white text-4xl md:text-6xl font-semibold mb-8 leading-[1.2]">
-          Equipping women for <br className="hidden md:block" /> workplace success.
+        <h1 className="text-white text-4xl md:text-5xl font-semibold mb-8 leading-[1.2]">
+          Equipping Women with Skills, Knowledge, and the Power to Lead.
         </h1>
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
           <Link to="/programs" className="bg-orange-500 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition">

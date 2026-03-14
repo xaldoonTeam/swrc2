@@ -5,9 +5,7 @@ import { motion } from 'framer-motion';
 const WelcomeSection: React.FC = () => {
   const features = [
     "Women-centered and inclusive programs", 
-    "Community-driven solutions", 
     "Practical skills for real opportunities", 
-    "Safe spaces for learning and growth",
     "Supportive mentorship and guidance",
     "Empowering women to thrive"
   ];
@@ -172,11 +170,11 @@ const WelcomeSection: React.FC = () => {
         >
           <div className="space-y-6 md:space-y-8">
             <motion.h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.15]">
-              Welcome To Somaliland <br className="hidden md:block" /> 
+              Somaliland <br className="hidden md:block" /> 
               <span className="text-orange-500">Women's Resource Centre !</span>
             </motion.h2>
             <motion.p className="text-gray-600 text-base md:text-lg leading-relaxed pr-4">
-              Equipping women to achieve purpose, fulfillment, and financial stability through meaningful employment and skills training.
+              Empowering young women with the skills, knowledge, and leadership to build careers, claim their rights, and create resilient communities.
             </motion.p>
           </div>
 

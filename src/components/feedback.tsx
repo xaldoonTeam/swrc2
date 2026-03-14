@@ -3,7 +3,7 @@
 function Feedback() {
     return (
         <section className="py-20 max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            {/* <div>
                 <h2 className="text-4xl font-bold mb-6">Feedback About Their Experience With Us</h2>
                 <p className="text-gray-500 mb-8">Read testimonials from our clients. See how our programs have made a difference in their lives.</p>
                 <div className="flex gap-4">
@@ -21,7 +21,7 @@ function Feedback() {
                     <p className="text-gray-600 text-sm italic">"Excellent programs! The team was punctual, thoroughn. Highly recommend!"</p>
                 </div>
                 <div className="absolute top-8 right-8 text-orange-400 opacity-30 text-6xl font-serif">"</div>
-            </div>
+            </div> */}
         </section>
     );
 }

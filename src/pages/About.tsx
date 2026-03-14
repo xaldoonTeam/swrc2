@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Target, Eye, Award, TrendingUp, Users, Handshake } from 'lucide-react';
+import { Target, Eye, Award, TrendingUp, Users, Handshake, ArrowUpRight, Link } from 'lucide-react';
 import { CoreValueCard, TeamMember} from '../components/CoreValueCard';
 
 const DEFAULT_HERO = "Empowering Women Through Education, Skills, And Opportunity.";
@@ -43,6 +43,7 @@ const AboutPage: React.FC = () => {
     }
   ];
 
+
   const impactStats = [
     {
       title: "1,500+ Women Trained:",
@@ -65,28 +66,28 @@ const AboutPage: React.FC = () => {
       icon: <Handshake className="text-orange-500" size={24} />
     }
   ];
-  const team = [
-    { name: "Lucky Kassim", role: "Founder", image: "/lac.jpg" },
-    { name: "Farah Carab", role: "Admin & Finance Manager", image: "/farah.jpg" },
-    { name: "nimco cali", role: "Communication officer", image: "https://i.pravatar.cc/150?u=nasteho" },
-    { name: "Isra hassan", role: "Finance Officer", image: "https://i.pravatar.cc/150?u=isra" },
-    { name: "Idil Abdirashid", role: "Logistics & procurement", image: "https://i.pravatar.cc/150?u=idil" },
-    { name: "Samsam Abdi", role: "HR Officer", image: "https://i.pravatar.cc/150?u=jake" }
-  ];
-
+    const team = [
+      { name: "Lucky Kassim", role: "Founder", image: "/lac.jpg" },
+      { name: "Farah Carab", role: "Admin & Finance Manager", image: "/feriha.jpg" },
+      { name: "nasteho bashir", role: "Communication Officer", image: "/nasteho.jpg" },
+      { name: "Idil Abdirashid Abdirahman", role: "procurement and logistics officer", image: "/idil.jpg" },
+      { name: "Samsam Abdi", role: "HR Officer", image: "/samsam.png" },
+      { name: "Sagal Adam", role: "Monitoring, Evaluation, Research and Learning (MERL) Officer", image: "/sagal.jpg" },
+      { name: "Awale Osman", role: "Finance Officer", image: "/awale.png" }
+    ];
   return (
     <div className="w-full bg-white">
       {/* Breadcrumb Navigation */}
-      <div className="px-6 md:px-12 py-4 text-sm text-gray-600 border-b">
-        <span className="hover:text-orange-500 cursor-pointer">Home</span> 
+      {/* <div className="px-6 md:px-12 py-4 text-sm text-gray-600 border-b">
+       <span className="hover:text-orange-500 cursor-pointer">Home</span> 
         <span className="mx-2">›</span> 
         <span className="font-bold text-gray-900">About us</span>
-      </div>
+      </div> */}
 
       {/* Hero Section */}
       <section className="relative h-[400px] md:h-[500px] flex items-center justify-center overflow-hidden">
         <img 
-          src="/about.jpg" 
+          src="/imp.jpg" 
           className="absolute inset-0 w-full h-full object-cover"
           alt="Empowerment background"
         />
@@ -198,19 +199,23 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* 2. Team Section */}
-      <section className="max-w-7xl mx-auto px-6 py-10">
-        <div className="text-center mb-16 space-y-4">
-          <span className="bg-orange-500 text-white text-[10px] font-bold px-3 py-1 rounded uppercase tracking-widest">
-            Our Team
-          </span>
-          <h2 className="text-4xl font-bold text-gray-900">The People Behind the Work</h2>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            We believe in collaboration, clear communication, and delivering results. Get to know the people who make it all happen.
+     <section className="max-w-7xl mx-auto px-6 py-12">
+        {/* Header */}
+        <div className="mb-16 max-w-2xl">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Meet our team
+          </h1>
+          <p className="text-gray-500 text-lg leading-relaxed">
+            Meet our exceptional team at Designflow! Comprising diverse talents and expertise, 
+            we are a dedicated group committed to delivering excellence in every project.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {team.map((m, i) => <TeamMember key={i} {...m} />)}
+        {/* Team Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {team.map((member, index) => (
+            <TeamMember key={index} {...member} />
+          ))}
         </div>
       </section>
 

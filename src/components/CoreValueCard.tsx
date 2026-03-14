@@ -19,37 +19,31 @@ export const CoreValueCard = ({ icon, title, desc, subDesc }: any) => (
     </motion.div>
   );
 
-  // Team Member Component
-export const TeamMember = ({ name, role, image, img, desc }: any) => (
-    <motion.div 
-      initial={{ opacity: 0, scale: 0.9 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      className="bg-[#F8F9FB] rounded-2xl overflow-hidden flex items-center p-4 gap-4 border border-transparent hover:border-orange-200 hover:bg-white transition-all shadow-sm"
-    >
-      <img src={image || img} alt={name} className="w-24 h-24 rounded-xl object-cover" />
-      <div className="flex-1">
-        <h4 className="font-bold text-gray-900">{name}</h4>
-        <p className="text-orange-500 text-xs font-medium mb-2">{role}</p>
-        {desc && (
-          <p className="text-[10px] text-gray-500 leading-tight mb-3">
-            {desc}
-          </p>
-        )}
-        {!desc && (
-          <p className="text-[10px] text-gray-500 leading-tight mb-3">
-            Dedicated to driving innovation and community growth.
-          </p>
-        )}
-        <div className="flex gap-2">
-          <Linkedin size={14} className="text-gray-400 hover:text-orange-500 cursor-pointer" />
-          <Twitter size={14} className="text-gray-400 hover:text-orange-500 cursor-pointer" />
-          <Globe size={14} className="text-gray-400 hover:text-orange-500 cursor-pointer" />
-        </div>
-      </div>
-    </motion.div>
-  );
   
+export const TeamMember = ({ name, role, image, img }: any) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.4 }}
+    className="bg-white rounded-3xl p-6 flex flex-col items-center text-center border border-gray-100 hover:shadow-lg transition-shadow"
+  >
+    {/* Image */}
+    <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-sm">
+      <img 
+        src={image || img} 
+        alt={name} 
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+    {/* Name and Role */}
+    <h3 className="font-semibold text-gray-900 text-xl mb-1">{name}</h3>
+    <p className="text-gray-400 text-sm">{role}</p>
+  </motion.div>
+);
+
+
 const AboutUsExtended = () => {
     const values = [
       {
