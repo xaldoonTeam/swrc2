@@ -31,8 +31,8 @@ const Footer: React.FC = () => {
         {/* Column 1: Logo & Mission */}
         <div className="space-y-6">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center shrink-0">
-              <span className="text-white text-[8px] text-center font-bold leading-tight">SWRC</span>
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shrink-0">
+            <img src="/logo.png" alt="logo" className="w-full h-full object-cover" />
             </div>
             <div className="leading-tight">
               <h1 className="text-orange-500 font-bold text-lg">Somaliland Women's</h1>

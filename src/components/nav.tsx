@@ -28,8 +28,8 @@ const Navbar: React.FC = () => {
       {/* Top row: Logo | Desktop links | Hamburger or Login */}
       <div className="flex items-center justify-between w-full">
         <Link to="/" className="flex items-center gap-3 shrink-0" onClick={closeMobile}>
-          <div className="w-10 h-10 bg-orange-400 rounded-full flex items-center justify-center shrink-0">
-            <span className="text-white text-[8px] text-center font-bold leading-tight">SWRC</span>
+          <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0">
+            <img src="/logo.png" alt="logo" className="w-full h-full object-cover" />
           </div>
           <div className="leading-tight">
             <h1 className="text-orange-500 font-bold text-base md:text-lg">Somaliland Women's</h1>
