@@ -52,9 +52,9 @@ const PARTNERS = {
     title: "Government of Somaliland",
     icon: Building2,
     items: [
-      { name: "Ministry of Employment, Social Affairs and Family" },
-      { name: "Ministry of Health and Development" },
-      { name: "Ministry of Justice" },
+      { name: "Ministry of Employment, Social Affairs and Family"  , logoUrl : "/somaliland.png"},
+      { name: "Ministry of Health and Development"  , logoUrl : "/somaliland.png"},
+      { name: "Ministry of Justice"  , logoUrl : "/somaliland.png"},
     ],
   },
   international: {
@@ -70,17 +70,17 @@ const PARTNERS = {
     title: "Local Partners",
     icon: Users,
     items: [
-      { name: "Hargeisa Cultural Centre" },
-      { name: "HAVOYOCO" },
-      { name: "NAFIS Network" },
+      { name: "Hargeisa Cultural Centre"  , logoUrl : "/xarunta.jpeg"},
+      { name: "HAVOYOCO"  , logoUrl : "/hav.jpeg"},
+      { name: "NAFIS Network"  , logoUrl : "/nafis.jpeg"},
     ],
   },
   networks: {
     title: "Networks",
     icon: Network,
     items: [
-      { name: "Shaqo-Carbis Coalition" },
-      { name: "Civil Society Accountability Network" },
+      { name: "Carbis-Shaqo Coalition" , logoUrl : "/somaliland.png"},
+      { name: "Civil Society Accountability Network"  , logoUrl : "/civil.jpg"},
     ],
   },
 };
