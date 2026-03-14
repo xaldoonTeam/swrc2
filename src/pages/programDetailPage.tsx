@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
-const ServiceDetail: React.FC = () => {
+const ProgramDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Breadcrumb Navigation */}
@@ -21,7 +21,7 @@ const ServiceDetail: React.FC = () => {
         <motion.img
           src="/img3.jpg"
           className="absolute inset-0 w-full h-full object-cover object-center"
-          alt="Service Header"
+          alt="Program Header"
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -133,4 +133,4 @@ const ServiceDetail: React.FC = () => {
   );
 };
 
-export default ServiceDetail;
+export default ProgramDetailPage;

@@ -30,10 +30,10 @@ const Hero: React.FC = () => {
         </h1>
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
           <Link to="/programs" className="bg-orange-500 text-white px-8 py-3 rounded-md font-bold hover:bg-orange-600 transition">
-            View all Services
+            View all Programs
           </Link>
-          {/* <Link to="/services" className="border-2 border-white/60 text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-orange-600 transition">
-            View all Services
+          {/* <Link to="/programs" className="border-2 border-white/60 text-white px-8 py-3 rounded-md font-bold hover:bg-white hover:text-orange-600 transition">
+            View all Programs
           </Link> */}
         </div>
       </div>

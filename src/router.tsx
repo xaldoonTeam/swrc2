@@ -4,7 +4,7 @@ import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import ServiceDetail from "./pages/serviceDetail";
+import ProgramDetailPage from "./pages/programDetailPage";
 import Programs from "./pages/Programs";
 import ProgramDetail from "./pages/ProgramDetail";
 import StoriesPage from "./pages/StoriesPage";
@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
           { path: "about", element: <About /> },
           { path: "programs", element: <Programs /> },
           { path: "programs/:slug", element: <ProgramDetail /> },
-          { path: "serviceDetail", element: <ServiceDetail /> },
+          { path: "program-detail", element: <ProgramDetailPage /> },
           { path: "stories", element: <StoriesPage /> },
           { path: "stories/:slug", element: <StoryDetail /> },
           { path: "contact", element: <Contact /> },

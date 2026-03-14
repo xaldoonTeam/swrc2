@@ -1,5 +1,5 @@
 import Hero from "../components/Hero"
-import Services from "../components/Programs"
+import Programs from "../components/Programs"
 import AlumniSection from "../components/Stories"
 import Feedback from "../components/feedback"
 import Welcone from "../components/WelcomeSection"
@@ -10,7 +10,7 @@ export const Home = () => {
     <>
       <Hero />
       <Welcone />
-      <Services />
+      <Programs />
       <PartnersSection />
       <AlumniSection />
       <Feedback />

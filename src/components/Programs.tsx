@@ -105,7 +105,7 @@ const Programs = () => {
           className="text-orange-400 font-medium mb-2"
           whileHover={{ scale: 1.05 }}
         >
-          Our Services
+          Our Programs
         </motion.p>
         <motion.h2 
           className="text-3xl md:text-4xl font-bold text-white mb-12"
@@ -122,7 +122,7 @@ const Programs = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <Link to="/serviceDetail">
+        <Link to="/program-detail">
         <ProgramCard 
           icon={Users} 
           title="Programs" 
