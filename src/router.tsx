@@ -8,6 +8,7 @@ import ServiceDetail from "./pages/serviceDetail";
 import Programs from "./pages/Programs";
 import ProgramDetail from "./pages/ProgramDetail";
 import StoriesPage from "./pages/StoriesPage";
+import StoryDetail from "./pages/StoryDetail";
 import Contact from "./pages/ContactPage";
 import ReportsPage from "./pages/report";
 import ResearchPage from "./pages/Research";
@@ -49,6 +50,7 @@ export const router = createBrowserRouter([
           { path: "programs/:slug", element: <ProgramDetail /> },
           { path: "serviceDetail", element: <ServiceDetail /> },
           { path: "stories", element: <StoriesPage /> },
+          { path: "stories/:slug", element: <StoryDetail /> },
           { path: "contact", element: <Contact /> },
           { path: "report", element: <ReportsPage /> },
           { path: "research", element: <ResearchPage /> },
