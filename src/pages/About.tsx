@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Target, Eye, Award, TrendingUp, Users, Handshake, ArrowUpRight, Link } from 'lucide-react';
+import { Target, Eye, Award, TrendingUp, Users, Handshake } from 'lucide-react';
 import { CoreValueCard, TeamMember} from '../components/CoreValueCard';
 
 const DEFAULT_HERO = "Empowering Women Through Education, Skills, And Opportunity.";

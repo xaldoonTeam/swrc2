@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-
+import { Link } from 'react-router-dom';
 const WelcomeSection: React.FC = () => {
   const features = [
     "Women-centered and inclusive programs", 
@@ -211,7 +211,9 @@ const WelcomeSection: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="bg-orange-500 text-white px-10 py-2 md:px-12 md:py-3 rounded font-bold text-lg shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all duration-300"
             >
+              <Link to="/about" className="flex items-center gap-2">
               Read more
+              </Link>
             </motion.button>
           </motion.div>
         </motion.div>

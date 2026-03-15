@@ -15,7 +15,6 @@ const PARTNERS = [
 const PartnersSection: React.FC = () => {
   return (
     <section className="relative bg-white py-20 md:py-32 overflow-hidden">
-      {/* Decorative background gradient (matches the top-right glow in your image) */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-bl from-orange-50/50 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -43,7 +42,7 @@ const PartnersSection: React.FC = () => {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center items-center gap-12 md:gap-20"
         >
-          {PARTNERS.map((partner, index) => (
+          {PARTNERS.map((partner) => (
             <motion.div
               key={partner.name}
               whileHover={{ scale: 1.05 }}
