@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { 
-  Users, Rocket, Heart, 
-  Linkedin, Twitter, Globe 
+  Users, Rocket, Heart
 } from 'lucide-react';
 
 
