@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
           </div>
           <div className="leading-tight">
             <h1 className="text-orange-500 font-bold text-base md:text-lg">Somaliland Women's</h1>
-            <p className="text-gray-800 text-center font-bold text-xs md:text-sm">Resource Centre</p>
+            <p className="text-gray-800 font-bold text-xs md:text-sm">Resource Centre</p>
           </div>
         </Link>
 
@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile dropdow */}
       {mobileOpen && (
         <div className="lg:hidden mt-4 py-4 border-t border-gray-100">
           <div className="flex flex-col gap-1">
