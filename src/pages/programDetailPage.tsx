@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+// import { ChevronRight } from 'lucide-react';
 
 const ProgramDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white pb-20">
       {/* Breadcrumb Navigation */}
-      <nav className="px-6 md:px-12 py-4 text-xs md:text-sm text-gray-600 border-b">
+      {/* <nav className="px-6 md:px-12 py-4 text-xs md:text-sm text-gray-600 border-b">
         <div className="flex items-center gap-2">
           <span className="hover:text-orange-500 cursor-pointer">Home</span>
           <ChevronRight size={14} />
@@ -14,7 +14,7 @@ const ProgramDetailPage: React.FC = () => {
           <ChevronRight size={14} />
           <span className="font-bold text-gray-900">Mentorship</span>
         </div>
-      </nav>
+      </nav> */}
 
       {/* Main Hero Image with Title Overlay */}
       <section className="relative h-[320px] sm:h-[400px] md:h-[520px] lg:h-[600px] overflow-hidden">

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download, Calendar, Eye, Filter, Search, ChevronDown, Loader2 } from 'lucide-react';
 import { publications, assetUrl, type Publication } from '../Api/client';
+import { useNavigate } from 'react-router-dom';
+
 
 const ReportCard = ({ title, year, type, description, downloads, pages, fileSize, fileUrl }: any) => (
   <motion.div 
@@ -131,7 +133,7 @@ const ReportsPage: React.FC = () => {
   });
 
   const displayList = loading ? [] : filteredReports;
-
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Header */}
@@ -208,12 +210,18 @@ const ReportsPage: React.FC = () => {
 
       {/* Reports Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Latest Reports</h2>
+          <div className="mb-12 flex items-center justify-between">
+          <div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-2"> Latest Reports</h2>
           <p className="text-gray-600">
             Download our comprehensive reports to learn about our impact, finances, and programs.
           </p>
+          </div>
+          <div>
+            <button onClick={() => navigate('/report')} className="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition shadow-sm">Research</button>
+          </div>
         </div>
+
 
         {loading && (
           <div className="flex items-center justify-center py-16 gap-2 text-gray-500">

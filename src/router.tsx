@@ -11,7 +11,7 @@ import StoriesPage from "./pages/StoriesPage";
 import StoryDetail from "./pages/StoryDetail";
 import Contact from "./pages/ContactPage";
 import ReportsPage from "./pages/report";
-import ResearchPage from "./pages/Research";
+// import publications from "./pages/report";
 import MediaPage from "./pages/Media";
 import NewsletterPage from "./pages/NewsletterPage";
 import NewsletterDetail from "./pages/NewsletterDetail";
@@ -31,6 +31,7 @@ import AdminSettings from "./pages/admin/AdminSettings";
 import AdminProfile from "./pages/admin/AdminProfile";
 import AdminUsers from "./pages/admin/AdminUsers";
 import RequireRoleAdmin from "./pages/admin/RequireRoleAdmin";
+import FullStoryPage from "./pages/fullStory";
 
 const RootLayout = () => (
   <div>
@@ -56,10 +57,13 @@ export const router = createBrowserRouter([
           { path: "stories/:slug", element: <StoryDetail /> },
           { path: "contact", element: <Contact /> },
           { path: "report", element: <ReportsPage /> },
-          { path: "research", element: <ResearchPage /> },
+          // { path: "research", element: <ResearchPage /> },
+          { path: "publications", element: <ReportsPage /> },
+          { path: "fullstory", element: <FullStoryPage /> },
           { path: "newsletters", element: <NewsletterPage /> },
           { path: "newsletters/:slug", element: <NewsletterDetail /> },
           { path: "media", element: <MediaPage /> },
+
           { path: "*", element: <div className="p-8 text-center text-gray-500">Not Found</div> },
         ],
       },

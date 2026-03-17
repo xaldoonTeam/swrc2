@@ -67,7 +67,7 @@ const AboutPage: React.FC = () => {
     }
   ];
     const team = [
-      { name: "Lucky Kassim", role: "Founder", image: "/lac.jpg" },
+      { name: "Lucky Kassim", role: "Executive Director", image: "/lac.jpg" },
       { name: "Farah Carab", role: "Admin & Finance Manager", image: "/feriha.jpg" },
       { name: "nasteho bashir", role: "Communication Officer", image: "/nasteho.jpg" },
       { name: "Idil Abdirashid Abdirahman", role: "procurement and logistics officer", image: "/idil.jpg" },

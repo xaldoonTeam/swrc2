@@ -123,7 +123,7 @@ const ProgramsPage: React.FC = () => {
       </section>
 
       {/* Stats Section (Quick View) */}
-      <section className="max-w-7xl mx-auto py-24 px-6">
+      {/* <section className="max-w-7xl mx-auto py-24 px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-gray-200 pt-16">
           <div>
             <h4 className="text-4xl font-bold text-gray-900">298</h4>
@@ -142,7 +142,7 @@ const ProgramsPage: React.FC = () => {
             <p className="text-gray-500 text-xs uppercase mt-2 tracking-widest">Experience Years</p>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };

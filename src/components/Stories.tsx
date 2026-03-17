@@ -1,51 +1,74 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote, ArrowUpRight, Play, Pause } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ALUMNI_STORIES = [
   {
     id: 1,
     name: "Hanna",
     title: "SWRC Graduate",
-    story: "Hanna gained essential job-hunting skills, from building a strong CV to mastering interviews. Today, she's a Marketing Coordinator at a leading tech firm.",
-    quote: "The SWRC program didn't just teach me how to find a job—it taught me how to build a career with confidence.",
+    story: "Hanna participated in multiple trainings, gaining skills that strengthened her confidence, leadership, and career direction.",
+    quote: "The SWRC programs didnt just train me — they transformed my confidence and opened new opportunities for my future.",
     image: "hanna.jpg",
-    achievement: "Marketing Coordinator",
-    location: "Nairobi, Kenya",
+    achievement: "Project Officer",
+    location: "Baadi goob ORG",
     color: "from-indigo-500 to-purple-600"
   },
   {
     id: 2,
     name: "Muna",
-    title: "Tech Scholarship Recipient",
+    title: "SWRC Graduate",
     story: "From learning basic coding to landing a software engineering role, Ahmed's journey shows the power of dedication and the right support system.",
     quote: "I went from never writing a line of code to building production applications in less than a year.",
     image: "muna.JPG",
     achievement: "Software Engineer",
-    location: "Cairo, Egypt",
+    location: "hargiesa, Somaliland",
     color: "from-blue-500 to-cyan-500"
   },
   {
     id: 3,
     name: "Nasra",
-    title: "Women in Tech Alum",
-    story: "Priya transformed her passion for problem-solving into a career in data science, breaking barriers in a male-dominated field.",
-    quote: "The mentorship program showed me that I belong in tech just as much as anyone else.",
+    title: "SWRC Graduate",
+    story: "Through mentorship and training, Nasra gained essential skills, secured an internship, and is now working as an SGBV Counselor.",
+    quote: "SWRC did not just train me — it connected me to real opportunities that led to my career.",
     image: "nasra.JPG",
-    achievement: "Data Analyst",
-    location: "Mumbai, India",
+    achievement: "Project Officer",
+    location: "WAAPO ORG",
     color: "from-amber-500 to-orange-500"
   },
   {
     id: 4,
     name: "hodo Hassan",
-    title: "Veterans Program Grad",
+    title: "SWRC Graduate",
     story: "After military service, Carlos found new purpose in cybersecurity, protecting the digital frontier with the same dedication he served with.",
     quote: "The skills are different, but the mission—protecting others—remains the same.",
     image: "hodo.JPG",
-    achievement: "Security Analyst",
-    location: "São Paulo, Brazil",
+    achievement: "Bussiness owner",
+    location: "hargiesa, Somaliland",
     color: "from-emerald-500 to-teal-500"
+  },
+    {
+    id: 5,
+    name: "Nasra",
+    title: "SWRC Graduate",
+    story: "Through mentorship and training, Nasra gained essential skills, secured an internship, and is now working as an SGBV Counselor.",
+    quote: "",
+    image: "nasra.JPG",
+    achievement: "Bussines owner",
+    location: "hargiesa, Somaliland",
+    color: "from-amber-500 to-orange-500"
+  },
+    {
+    id: 6,
+    name: "MAWAHIB",
+    title: "SWRC Graduate",
+    story: "Through the program, Mawahib gained essential skills, built confidence, and is now ready to pursue new opportunities and make a positive impact.",
+    quote: "The SWRC Employability Skills Training transformed my confidence and prepared me for real opportunities.",
+    image: "mawahin.JPG",
+    achievement: "works at Minister of Labour Social Affairs",
+    location: "hargiesa, Somaliland",
+    color: "from-blue-500 to-cyan-500"
   }
 ];
 
@@ -227,6 +250,7 @@ const AlumniStories: React.FC = () => {
                   </motion.p>
 
                   {/* CTA Button */}
+                  <Link to="/fullstory">
                   <motion.button
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -236,6 +260,7 @@ const AlumniStories: React.FC = () => {
                     Read full story
                     <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </motion.button>
+                  </Link>
 
                   {/* Progress indicators */}
                   <div className="mt-12 flex items-center gap-3">
@@ -261,12 +286,11 @@ const AlumniStories: React.FC = () => {
         </div>
 
         {/* Stats section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-20">
           {[
-            { value: "500+", label: "Alumni" },
-            { value: "85%", label: "Employment Rate" },
-            { value: "12", label: "Countries" },
-            { value: "50+", label: "Partner Companies" }
+            { value: "20+", label: "Alumni" },
+            { value: "55%", label: "Employment Rate" },
+            { value: "10+", label: "Partner Companies" }
           ].map((stat, index) => (
             <motion.div
               key={index}
