@@ -165,7 +165,7 @@ const AlumniStories: React.FC = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction * -300 }}
               transition={{ type: "spring", damping: 30, stiffness: 200 }}
-              className="relative bg-white rounded-3xl shadow-2xl overflow-hidden"
+              className="relative bg-white rounded-lg shadow-2xl overflow-hidden"
             >
               <div className="grid md:grid-cols-2 gap-0">
                 {/* Image Side */}
@@ -193,8 +193,8 @@ const AlumniStories: React.FC = () => {
                   
                   {/* Achievement badge */}
                   <div className="absolute bottom-6 left-6 right-6">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
-                      <p className="text-white/80 text-xs uppercase tracking-wider mb-1">
+                    <div className="bg-white/20 backdrop-blur-sm rounded p-4 border border-white/30">
+                      <p className="text-black/80 text-xs font-semibold uppercase tracking-wider mb-1">
                         Current Role
                       </p>
                       <p className="text-white font-semibold text-lg">
@@ -250,7 +250,7 @@ const AlumniStories: React.FC = () => {
                   </motion.p>
 
                   {/* CTA Button */}
-                  <Link to="/fullstory">
+                  <Link to="/stories">
                   <motion.button
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

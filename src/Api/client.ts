@@ -158,7 +158,9 @@ export interface Story {
   role: string;
   category: string;
   story: string;
+  quote?: string | null;
   imageUrl?: string | null;
+  programsCompleted?: string | null;
   published: boolean;
   createdAt: string;
   updatedAt: string;

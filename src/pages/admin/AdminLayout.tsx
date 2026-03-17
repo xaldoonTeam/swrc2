@@ -26,6 +26,11 @@ export default function AdminLayout() {
     setStoredTheme(darkMode);
   }, [darkMode]);
 
+  // Close mobile sidebar when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   const setDarkMode = useCallback((v: boolean) => setDarkModeState(v), []);
   const toggleTheme = useCallback(() => setDarkModeState((d: boolean) => !d), []);
 
@@ -41,6 +46,7 @@ export default function AdminLayout() {
   return (
     <AdminThemeContext.Provider value={themeValue}>
       <div className={`h-screen max-h-screen overflow-hidden flex ${themeClass}`}>
+        {/* Desktop sidebar */}
         <div className="hidden md:flex md:w-64 shrink-0 min-h-0">
           <AdminSidebar
             darkMode={darkMode}
@@ -50,10 +56,30 @@ export default function AdminLayout() {
           />
         </div>
 
+        {/* Mobile sidebar overlay */}
+        {isOpen && (
+          <>
+            <div
+              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
+            <div className="fixed inset-y-0 left-0 w-64 z-50 md:hidden">
+              <AdminSidebar
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+                search={sidebarSearch}
+                onSearchChange={setSidebarSearch}
+                onClose={() => setIsOpen(false)}
+              />
+            </div>
+          </>
+        )}
+
         <div className="flex-1 flex flex-col min-w-0 min-h-0 overflow-hidden">
           <AdminNav
             title={title}
-            onToggleSidebar={() => setIsOpen(!isOpen)}
+            onToggleSidebar={() => setIsOpen((o) => !o)}
             darkMode={darkMode}
             setDarkMode={setDarkMode}
             search={headerSearch}

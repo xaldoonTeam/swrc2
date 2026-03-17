@@ -3,7 +3,10 @@ import jwt from "jsonwebtoken";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET ?? "dev-secret-change-in-production";
+const ACCESS_TOKEN_SECRET =
+  process.env.ACCESS_TOKEN_SECRET ?? process.env.JWT_SECRET ?? "dev-access-secret-change-in-production";
+const REFRESH_TOKEN_SECRET =
+  process.env.REFRESH_TOKEN_SECRET ?? process.env.JWT_SECRET ?? "dev-refresh-secret-change-in-production";
 
 export interface AuthPayload {
   userId: string;
@@ -27,7 +30,7 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as AuthPayload;
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET) as AuthPayload;
     req.user = decoded;
     next();
   } catch {
@@ -60,10 +63,18 @@ export function requireRoleAdmin(req: AuthRequest, res: Response, next: NextFunc
   next();
 }
 
-export function createToken(user: { id: string; email: string; role: string }): string {
+export function createAccessToken(user: { id: string; email: string; role: string }): string {
   return jwt.sign(
     { userId: user.id, email: user.email, role: user.role },
-    JWT_SECRET,
+    ACCESS_TOKEN_SECRET,
+    { expiresIn: "15m" }
+  );
+}
+
+export function createRefreshToken(user: { id: string; email: string; role: string }): string {
+  return jwt.sign(
+    { userId: user.id, email: user.email, role: user.role },
+    REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" }
   );
 }

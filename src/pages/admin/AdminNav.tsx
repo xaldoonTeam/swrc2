@@ -25,7 +25,7 @@ export default function AdminNav({ title = "Dashboard", onToggleSidebar, darkMod
         <button
           type="button"
           onClick={onToggleSidebar}
-          className={`p-2 rounded-xl lg:hidden transition ${darkMode ? "hover:bg-white/5 text-slate-400" : "hover:bg-slate-100 text-slate-500"}`}
+          className={`p-2 rounded-xl md:hidden transition ${darkMode ? "hover:bg-white/5 text-slate-400" : "hover:bg-slate-100 text-slate-500"}`}
           aria-label="Toggle sidebar"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

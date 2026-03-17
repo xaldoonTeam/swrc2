@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
-import { createToken, requireAuth, AuthRequest } from "../middleware/auth.js";
+import { createAccessToken, createRefreshToken, requireAuth, AuthRequest } from "../middleware/auth.js";
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -25,36 +25,116 @@ router.post("/login", async (req, res) => {
     return;
   }
 
-  const token = createToken({
-    id: user.id,
-    email: user.email,
-    role: user.role,
-  });
-
   const userData = { id: user.id, email: user.email, role: user.role };
   const isProd = process.env.NODE_ENV === "production";
-  const maxAge = 7 * 24 * 60 * 60; // 7 days in seconds
+  const accessToken = createAccessToken(userData);
+  const refreshToken = createRefreshToken(userData);
 
-  res.cookie("swrc_token", token, {
+  const refreshTokenHash = await bcrypt.hash(refreshToken, 10);
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { refreshTokenHash },
+  });
+
+  res.cookie("swrc_token", accessToken, {
     httpOnly: true,
     secure: isProd,
     sameSite: "lax",
-    maxAge: maxAge * 1000,
+    maxAge: 15 * 60 * 1000, // 15 minutes
+  });
+  res.cookie("swrc_refresh", refreshToken, {
+    httpOnly: true,
+    secure: isProd,
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
   res.cookie("swrc_user", JSON.stringify(userData), {
     httpOnly: false,
     secure: isProd,
     sameSite: "lax",
-    maxAge: maxAge * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   res.json({ user: userData });
 });
 
-router.post("/logout", (_req, res) => {
+router.post("/logout", async (req, res) => {
+  const cookies = (req as typeof req & { cookies?: { swrc_refresh?: string } }).cookies;
+  const refreshToken = cookies?.swrc_refresh;
+
+  if (refreshToken) {
+    const user = await prisma.user.findFirst({
+      where: { refreshTokenHash: { not: null } },
+    });
+    if (user) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { refreshTokenHash: null },
+      });
+    }
+  }
+
   res.clearCookie("swrc_token");
+  res.clearCookie("swrc_refresh");
   res.clearCookie("swrc_user");
   res.status(204).send();
+});
+
+router.post("/refresh", async (req, res) => {
+  const cookies = (req as typeof req & { cookies?: { swrc_refresh?: string } }).cookies;
+  const token = cookies?.swrc_refresh;
+  if (!token) {
+    res.status(401).json({ error: "Refresh token missing" });
+    return;
+  }
+
+  const isProd = process.env.NODE_ENV === "production";
+
+  try {
+    const decoded = (await import("jsonwebtoken")).default.verify(
+      token,
+      process.env.REFRESH_TOKEN_SECRET ?? process.env.JWT_SECRET ?? "dev-refresh-secret-change-in-production"
+    ) as { userId: string; email: string; role: string };
+
+    const user = await prisma.user.findUnique({ where: { id: decoded.userId } });
+    if (!user || !user.refreshTokenHash) {
+      res.status(401).json({ error: "Invalid refresh token" });
+      return;
+    }
+
+    const matches = await bcrypt.compare(token, user.refreshTokenHash);
+    if (!matches) {
+      res.status(401).json({ error: "Invalid refresh token" });
+      return;
+    }
+
+    const payload = { id: user.id, email: user.email, role: user.role };
+    const newAccessToken = createAccessToken(payload);
+    const newRefreshToken = createRefreshToken(payload);
+    const newHash = await bcrypt.hash(newRefreshToken, 10);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { refreshTokenHash: newHash },
+    });
+
+    res.cookie("swrc_token", newAccessToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+    });
+    res.cookie("swrc_refresh", newRefreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.json({ ok: true });
+  } catch {
+    res.status(401).json({ error: "Invalid or expired refresh token" });
+  }
 });
 
 router.get("/me", requireAuth, async (req: AuthRequest, res) => {

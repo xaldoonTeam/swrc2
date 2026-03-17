@@ -15,6 +15,8 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
   const [role, setRole] = useState("");
   const [category, setCategory] = useState("");
   const [storyText, setStoryText] = useState("");
+  const [quote, setQuote] = useState("");
+  const [programsCompleted, setProgramsCompleted] = useState("");
   const [published, setPublished] = useState(true);
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,8 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
       setRole(story.role ?? "");
       setCategory(story.category ?? "");
       setStoryText(story.story ?? "");
+      setQuote(story.quote ?? "");
+      setProgramsCompleted(story.programsCompleted ?? "");
       setPublished(story.published);
       setImage(null);
     } else {
@@ -35,6 +39,8 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
       setRole("");
       setCategory("");
       setStoryText("");
+      setQuote("");
+      setProgramsCompleted("");
       setPublished(true);
       setImage(null);
     }
@@ -46,6 +52,8 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
     setRole("");
     setCategory("");
     setStoryText("");
+    setQuote("");
+    setProgramsCompleted("");
     setPublished(true);
     setImage(null);
     setError("");
@@ -70,6 +78,8 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
       form.append("role", role.trim());
       form.append("category", category.trim());
       form.append("story", storyText.trim());
+      form.append("quote", quote.trim());
+      form.append("programsCompleted", programsCompleted.trim());
       form.append("published", published ? "true" : "false");
       if (image) form.append("image", image);
 
@@ -150,6 +160,32 @@ export default function AddStoryModal({ isOpen, onClose, onSuccess, story }: Sto
               onChange={(e) => setStoryText(e.target.value)}
               rows={4}
               placeholder="The story or testimonial…"
+              className="w-full px-4 py-2.5 rounded bg-slate-800/50 border border-slate-600/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              Highlight quote (what they want to say to the community)
+            </label>
+            <textarea
+              value={quote}
+              onChange={(e) => setQuote(e.target.value)}
+              rows={3}
+              placeholder="e.g. “The support I received at SWRC changed my life and inspired me to give back to my community.”"
+              className="w-full px-4 py-2.5 rounded bg-slate-800/50 border border-slate-600/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 resize-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              Programs completed
+            </label>
+            <textarea
+              value={programsCompleted}
+              onChange={(e) => setProgramsCompleted(e.target.value)}
+              rows={3}
+              placeholder="e.g. Lawyer Training, Employment Training, KG Teacher Training"
               className="w-full px-4 py-2.5 rounded bg-slate-800/50 border border-slate-600/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 resize-none"
             />
           </div>

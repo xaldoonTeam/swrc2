@@ -27,6 +27,8 @@ router.post("/", requireAuth, requireAdmin, uploadImage.single("image"), async (
   const role = body.role?.trim() ?? "";
   const category = body.category?.trim() ?? "";
   const story = body.story?.trim() ?? "";
+  const quote = body.quote?.trim() || null;
+  const programsCompleted = body.programsCompleted?.trim() || null;
   const published = body.published !== "false";
 
   if (!name) {
@@ -40,7 +42,7 @@ router.post("/", requireAuth, requireAdmin, uploadImage.single("image"), async (
   }
 
   const item = await prisma.story.create({
-    data: { name, role, category, story, imageUrl, published },
+    data: { name, role, category, story, quote, imageUrl, programsCompleted, published },
   });
   res.status(201).json(item);
 });
@@ -69,6 +71,12 @@ router.put("/:id", requireAuth, requireAdmin, uploadImage.single("image"), async
   const role = body.role?.trim() ?? existing.role;
   const category = body.category?.trim() ?? existing.category;
   const story = body.story?.trim() ?? existing.story;
+  const quote =
+    body.quote !== undefined ? body.quote.trim() || null : existing.quote;
+  const programsCompleted =
+    body.programsCompleted !== undefined
+      ? body.programsCompleted.trim() || null
+      : existing.programsCompleted;
   const published = body.published !== "false";
 
   let imageUrl = existing.imageUrl;
@@ -78,7 +86,7 @@ router.put("/:id", requireAuth, requireAdmin, uploadImage.single("image"), async
 
   const item = await prisma.story.update({
     where: { id },
-    data: { name, role, category, story, imageUrl, published },
+    data: { name, role, category, story, quote, imageUrl, programsCompleted, published },
   });
   res.json(item);
 });

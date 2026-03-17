@@ -1,7 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Quote, Loader2 } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  Quote,
+  Loader2,
+  ArrowLeft,
+  Bookmark,
+  Share2,
+  Calendar,
+  MapPin,
+  Award,
+  ChevronDown,
+  Sparkles,
+  Heart,
+} from "lucide-react";
 import { stories as storiesApi, assetUrl, type Story } from "../Api/client";
 
 const FALLBACK_STORIES: Array<{ name: string; role: string; category: string; image: string; story: string }> = [
@@ -20,6 +32,9 @@ export default function StoryDetail() {
   const [story, setStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSaved, setIsSaved] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     if (!slug) {
@@ -78,68 +93,221 @@ export default function StoryDetail() {
     );
   }
 
+  const heroImage =
+    story.imageUrl
+      ? assetUrl(story.imageUrl)
+      : "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80";
+
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Breadcrumb */}
-      <nav className="px-6 md:px-12 py-4 text-xs md:text-sm text-gray-600 border-b bg-white">
-        <div className="flex items-center gap-2 max-w-4xl mx-auto">
-          <Link to="/" className="hover:text-orange-500 transition">
-            Home
-          </Link>
-          <span className="text-gray-400">/</span>
-          <Link to="/stories" className="hover:text-orange-500 transition">
-            Stories
-          </Link>
-          <span className="text-gray-400">/</span>
-          <span className="font-semibold text-gray-900 truncate">{story.name}</span>
+    <div className="min-h-screen bg-white">
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber-500 to-orange-500 z-50"
+        style={{ width: progressWidth }}
+      />
+
+      <nav className="fixed top-4 left-4 right-4 z-40 flex items-center justify-between">
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"
+          onClick={() => window.history.back()}
+        >
+          <ArrowLeft size={18} />
+        </motion.button>
+
+        <div className="flex items-center gap-2">
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            onClick={() => setIsSaved(!isSaved)}
+            className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"
+          >
+            <Bookmark size={16} className={isSaved ? "fill-current" : ""} />
+          </motion.button>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg flex items-center justify-center hover:bg-amber-600 hover:text-white transition-colors"
+          >
+            <Share2 size={16} />
+          </motion.button>
         </div>
       </nav>
 
-      <article className="max-w-3xl mx-auto px-6 md:px-12 py-12 md:py-16">
+      <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-orange-100"
+          className="absolute inset-0"
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5 }}
         >
-          <div className="flex flex-col sm:flex-row items-start gap-6 mb-8">
-            <img
-              src={
-                story.imageUrl
-                  ? assetUrl(story.imageUrl)
-                  : "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80"
-              }
-              alt={story.name}
-              className="w-24 h-24 rounded-full object-cover border-2 border-orange-400 shrink-0"
-            />
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                {story.name}
-              </h1>
-              <p className="text-orange-600 font-medium mb-2">{story.role}</p>
-              <span className="inline-block text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-                {story.category}
+          <img
+            src={heroImage}
+            alt={story.name}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+        </motion.div>
+
+        <div className="absolute bottom-0 left-0 right-0 text-white p-8 md:p-16 max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="inline-flex items-center gap-2 bg-amber-500/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
+            >
+              <Sparkles size={14} className="text-amber-300" />
+              <span className="text-xs font-medium text-amber-200 uppercase tracking-wider">
+                Alumni Story
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4"
+            >
+              My name is{" "}
+              <span className="text-amber-400">{story.name}</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="text-lg md:text-xl text-white/80 max-w-2xl mb-6"
+            >
+              {story.role || "A journey of growth, learning, and empowerment at the Somaliland Women's Resource Centre"}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="flex flex-wrap items-center gap-6 text-sm text-white/60"
+            >
+              <span className="flex items-center gap-2">
+                <MapPin size={16} />
+                Somaliland
+              </span>
+              <span className="flex items-center gap-2">
+                <Calendar size={16} />
+                SWRC Graduate
+              </span>
+              <span className="flex items-center gap-2">
+                <Award size={16} />
+                Inspiring Story
+              </span>
+            </motion.div>
+
+            <motion.div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }}
+            >
+              <span className="text-xs uppercase tracking-wider text-white/40">
+                Read the story
+              </span>
+              <ChevronDown size={16} className="text-white/40" />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      <main className="max-w-4xl mx-auto px-6 py-20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="relative bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-8 md:p-12 mb-10"
+        >
+          <Quote
+            size={48}
+            className="text-amber-300/30 absolute top-6 right-6"
+          />
+          <p className="text-xl md:text-2xl text-amber-900 font-light italic leading-relaxed whitespace-pre-wrap">
+            "{story.quote || story.story}"
+          </p>
+          <div className="mt-4 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-amber-200 flex items-center justify-center">
+              <span className="text-amber-700 font-semibold text-sm">
+                {story.name.charAt(0).toUpperCase()}
               </span>
             </div>
-          </div>
-
-          <div className="border-l-4 border-orange-400 pl-6">
-            <Quote className="w-8 h-8 text-orange-300 mb-2" />
-            <p className="text-gray-700 text-lg leading-relaxed whitespace-pre-wrap">
-              "{story.story}"
-            </p>
-          </div>
-
-          <div className="mt-10 pt-6 border-t border-gray-100">
-            <Link
-              to="/stories"
-              className="inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-600 transition"
-            >
-              ← Back to all stories
-            </Link>
+            <span className="text-amber-700 font-medium">
+              — {story.name}
+            </span>
           </div>
         </motion.div>
-      </article>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="mb-10"
+        >
+          <h2 className="text-2xl font-semibold text-slate-800 mb-3">
+            Full story
+          </h2>
+          <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">
+            {story.story}
+          </p>
+        </motion.div>
+
+        {story.programsCompleted && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="mt-6 bg-slate-50 rounded-3xl p-8"
+          >
+            <h3 className="text-xl font-semibold text-slate-800 mb-4">
+              Programs completed at SWRC
+            </h3>
+            <ul className="list-disc list-inside text-slate-600 space-y-1">
+              {story.programsCompleted
+                .split(/[,;\n]/)
+                .map((item) => item.trim())
+                .filter(Boolean)
+                .map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+            </ul>
+          </motion.div>
+        )}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="mt-12 flex items-center justify-between gap-4 flex-wrap"
+        >
+          <Link
+            to="/stories"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-amber-600 transition-colors text-sm font-medium"
+          >
+            <ArrowLeft size={16} />
+            Back to all stories
+          </Link>
+
+          <div className="flex items-center gap-6">
+            <button className="flex items-center gap-2 text-slate-400 hover:text-amber-600 transition-colors">
+              <Heart size={18} />
+              <span className="text-sm">Appreciate</span>
+            </button>
+            <button className="flex items-center gap-2 text-slate-400 hover:text-amber-600 transition-colors">
+              <Share2 size={18} />
+              <span className="text-sm">Share</span>
+            </button>
+          </div>
+        </motion.div>
+      </main>
     </div>
   );
 }

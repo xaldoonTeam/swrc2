@@ -119,7 +119,7 @@ export default function AdminLogin() {
                       required
                       autoComplete="email"
                       className="w-full pl-11 pr-4 py-3 bg-slate-50/80 border border-slate-200 rounded text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400/60 focus:bg-white transition-all text-sm"
-                      placeholder="admin@swrc.org"
+                      placeholder="email@example.com"
                     />
                   </div>
                 </div>

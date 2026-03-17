@@ -14,6 +14,7 @@ import {
   User,
   Users,
   Mail,
+  X,
 } from "lucide-react";
 import AdminLogo from "../../components/admin/AdminLogo";
 import { FaUser } from "react-icons/fa";
@@ -35,9 +36,10 @@ interface AdminSidebarProps {
   setDarkMode: (v: boolean) => void;
   search: string;
   onSearchChange: (v: string) => void;
+  onClose?: () => void;
 }
 
-export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, search, onSearchChange }: AdminSidebarProps) {
+export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, search, onSearchChange, onClose }: AdminSidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -72,16 +74,27 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
 
   return (
     <aside
-      className={`flex flex-col shrink-0 min-h-0 w-64 ${sidebarBg} rounded overflow-hidden shadow-2xl shadow-black/20`}
+      className={`flex flex-col shrink-0 min-h-0 w-64 h-full ${sidebarBg} rounded overflow-hidden shadow-2xl shadow-black/20`}
     >
-      <div className="p-2 ">
+      <div className="p-2 flex items-center justify-between gap-2">
         <Link
           to="/admin/dashboard"
-          className={`block p-2 rounded active:scale-[0.98] transition ${darkMode ? "hover:bg-white/5" : "hover:bg-slate-100"}`}
+          className={`block p-2 rounded active:scale-[0.98] transition flex-1 min-w-0 ${darkMode ? "hover:bg-white/5" : "hover:bg-slate-100"}`}
         >
           <AdminLogo size="sm" showWordmark />
         </Link>
-        <div className="mt-2">
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className={`p-2 rounded transition shrink-0 ${darkMode ? "hover:bg-white/10 text-slate-400" : "hover:bg-slate-100 text-slate-500"}`}
+            aria-label="Close sidebar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+        </div>
+        <div className="mt-2 px-2">
           <div className="relative group">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-orange-400 transition" />
             <input
@@ -93,7 +106,6 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
             />
           </div>
         </div>
-      </div>
 
       <nav className="flex-1 px-3 py-2 overflow-auto">
         <div className={`text-[10px] font-bold uppercase tracking-widest px-3 mb-3 ${darkMode ? "text-slate-500" : "text-slate-400"}`}>Menu</div>

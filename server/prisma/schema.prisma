@@ -16,12 +16,13 @@ enum Role {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String   @map("password_hash")
-  role         Role     @default(EDITOR)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  id              String   @id @default(cuid())
+  email           String   @unique
+  passwordHash    String   @map("password_hash")
+  role            Role     @default(EDITOR)
+  refreshTokenHash String? @map("refresh_token_hash")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
 
   @@map("users")
 }
@@ -78,15 +79,17 @@ model Program {
 }
 
 model Story {
-  id        String   @id @default(cuid())
-  name      String
-  role      String
-  category  String
-  story     String   @db.Text
-  imageUrl  String?  @map("image_url")
-  published Boolean  @default(true)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id                String   @id @default(cuid())
+  name              String
+  role              String
+  category          String
+  story             String   @db.Text
+  quote             String?  @db.Text
+  imageUrl          String?  @map("image_url")
+  programsCompleted String?  @map("programs_completed")
+  published         Boolean  @default(true)
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
   @@map("stories")
 }
