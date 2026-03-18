@@ -193,9 +193,11 @@ const StoriesPage: React.FC = () => {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600">
-                Media & Videos
-              </h3>
+              <Link to="/media">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-orange-600">
+                  Media & Videos
+                </h3>
+              </Link>
               <p className="text-gray-600">
                 Watch documentaries, interviews, and video stories from our community.
               </p>
