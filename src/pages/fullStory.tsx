@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { 
   ArrowLeft, Heart, Share2, Bookmark, Calendar, MapPin, 
   Award, Users, BookOpen, ChevronDown, Quote, Sparkles,
-  GraduationCap, Briefcase, Target, ArrowRight
+  GraduationCap, Target, ArrowRight
 } from "lucide-react";
 
 const FullStoryPage: React.FC = () => {
   const [isSaved, setIsSaved] = useState(false);
-  const [activeQuote, setActiveQuote] = useState(false);
+//   const [activeQuote, setActiveQuote] = useState(false);
   const { scrollYProgress } = useScroll();
   
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
