@@ -25,7 +25,7 @@ export const TeamMember = ({ name, role, image, img }: any) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4 }}
-    className="bg-white rounded-3xl p-6 flex flex-col items-center text-center border border-gray-100 hover:shadow-lg transition-shadow"
+    className="bg-white rounded-lg p-6 flex flex-col items-center text-center border border-gray-100 hover:shadow-lg transition-shadow"
   >
     {/* Image */}
     <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-sm">
@@ -38,7 +38,7 @@ export const TeamMember = ({ name, role, image, img }: any) => (
 
     {/* Name and Role */}
     <h3 className="font-semibold text-gray-900 text-xl mb-1">{name}</h3>
-    <p className="text-gray-400 text-sm">{role}</p>
+    <p className="text-gray-400 font-medium text-sm">{role}</p>
   </motion.div>
 );
 
