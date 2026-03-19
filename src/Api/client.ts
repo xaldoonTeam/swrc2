@@ -3,7 +3,9 @@
  * Auth uses cookies (swrc_token) - ensure credentials: 'include' for same-origin or CORS.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
+const RAW_API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
+// Allow either ".../api" or host root in env without creating "/api/api/*" URLs.
+const API_BASE = RAW_API_BASE.replace(/\/api\/?$/, "");
 
 export async function api<T>(
   path: string,
