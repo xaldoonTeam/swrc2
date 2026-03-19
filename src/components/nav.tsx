@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
             <div className="pt-2 mt-2 border-t border-gray-100">
-              <button className="w-full bg-orange-500 text-white px-6 py-3 rounded-md text-sm font-bold hover:bg-orange-600 transition shadow-sm">
+              <button className="w-full bg-orange-500 text-white px-6 py-3 rounded-md text-sm font-bold hover:bg-orange-600 transition shadow-sm" onClick={() => navigate('/admin/login')}>
                 Login
               </button>
             </div>
