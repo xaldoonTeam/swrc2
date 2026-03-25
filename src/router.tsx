@@ -32,6 +32,7 @@ import AdminProfile from "./pages/admin/AdminProfile";
 import AdminUsers from "./pages/admin/AdminUsers";
 import RequireRoleAdmin from "./pages/admin/RequireRoleAdmin";
 import FullStoryPage from "./pages/fullStory";
+import ApplyProgram from "./pages/applyForm";
 
 const RootLayout = () => (
   <div>
@@ -63,6 +64,8 @@ export const router = createBrowserRouter([
           { path: "newsletters", element: <NewsletterPage /> },
           { path: "newsletters/:slug", element: <NewsletterDetail /> },
           { path: "media", element: <MediaPage /> },
+          { path: "apply", element: <ApplyProgram /> },
+
 
           { path: "*", element: <div className="p-8 text-center text-gray-500">Not Found</div> },
         ],

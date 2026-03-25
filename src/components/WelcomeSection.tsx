@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 const WelcomeSection: React.FC = () => {
   const features = [
-    "Women-centered and inclusive programs", 
-    "Practical skills for real opportunities", 
-    "Supportive mentorship and guidance",
-    "Empowering women to thrive"
+    "Skills for Employment", 
+    "Mentorship & Leadership Development", 
+    "Women’s Rights & GBV Prevention",
+    "Climate Action & Community Resilience"
   ];
+
 
   // Animation variants
   const fadeInRight = {

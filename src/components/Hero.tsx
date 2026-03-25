@@ -40,11 +40,11 @@ const Hero: React.FC = () => {
 
       {/* Floating Stats Bar */}
       <div className="absolute -bottom-16 left-1/2 -translate-x-1/2 w-full max-w-6xl px-4">
-        <div className="bg-white rounded-lg shadow-2xl grid grid-cols-2 md:grid-cols-4 py-6 px-2 md:px-6">
+        <div className="bg-white rounded-lg shadow-2xl grid grid-cols-2 md:grid-cols-3 py-6 px-2 md:px-6">
           <StatCard number="6k" label="participants served" />
           <StatCard number="1,321" label="volunteer hours" />
-          <StatCard number="10+" label="lower recidivism for WRC participants" />
-          <StatCard number="6+" label="years of experience" />
+          {/* <StatCard number="10+" label="lower recidivism for WRC participants" /> */}
+          <StatCard number="5+" label="years of experience" />
         </div>
       </div>
     </section>
