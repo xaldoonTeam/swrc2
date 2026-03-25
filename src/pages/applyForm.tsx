@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  ArrowLeft, ArrowRight, Check, Calendar, User, Mail, 
-  Phone, MapPin, Briefcase, GraduationCap, FileText, 
+  ArrowLeft, ArrowRight, Check, User, Briefcase, GraduationCap, 
   Send, AlertCircle, CheckCircle, Sparkles,
   Award, BookOpen, Clock
 } from "lucide-react";
