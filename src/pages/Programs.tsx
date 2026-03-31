@@ -116,7 +116,7 @@ const ProgramsPage: React.FC = () => {
             <h2 className="text-3xl font-bold">Ready to start your journey?</h2>
             <p className="opacity-90">Join over 298+ participants who have already transformed their careers.</p>
           </div>
-          <button onClick={() => navigate('/program-detail')} className="bg-[#2D241E] text-white px-10 py-4 rounded-full font-bold shadow-xl hover:bg-black transition-all">
+          <button onClick={() => navigate('/apply')} className="bg-[#2D241E] text-white px-10 py-4 rounded-full font-bold shadow-xl hover:bg-black transition-all">
             Apply for a Program
           </button>
         </div>

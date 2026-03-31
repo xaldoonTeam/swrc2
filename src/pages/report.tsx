@@ -259,7 +259,7 @@ const ReportsPage: React.FC = () => {
               <div className="text-blue-100">Total Downloads</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">6+</div>
+              <div className="text-4xl font-bold mb-2">5+</div>
               <div className="text-blue-100">Years of Reporting</div>
             </div>
           </div>

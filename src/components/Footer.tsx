@@ -43,10 +43,10 @@ const Footer: React.FC = () => {
             {mission}
           </p>
           <div className="flex gap-4">
-            <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Facebook size={18} /></a>
-            <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Twitter size={18} /></a>
-            <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Instagram size={18} /></a>
-            <a href="#" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Linkedin size={18} /></a>
+            <a href="https://www.facebook.com/profile.php?id=100081002813069" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Facebook size={18} /></a>
+            <a href="https://x.com/SomalilandWome2" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Twitter size={18} /></a>
+            <a href="https://www.instagram.com/p/DVof7nwCBSd/" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Instagram size={18} /></a>
+            <a href="https://www.linkedin.com/in/lucky-kassim-22005514b?utm_source=share_via&utm_content=profile&utm_medium=member_ios" className="bg-white/10 p-2 rounded-full hover:bg-orange-500 transition"><Linkedin size={18} /></a>
           </div>
         </div>
 

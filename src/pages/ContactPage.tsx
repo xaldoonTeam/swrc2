@@ -56,7 +56,7 @@ const ContactPage: React.FC = () => {
                 <div className="bg-white/20 p-2 rounded"><Phone size={20} /></div>
                 <div>
                   <p className="text-xs text-orange-200 uppercase font-bold tracking-widest">Call Us</p>
-                  <p className="font-semibold">+252 63 XXXXXXX</p>
+                  <p className="font-semibold">+252 65 9611111</p>
                 </div>
               </div>
 
@@ -80,10 +80,10 @@ const ContactPage: React.FC = () => {
             <div className="pt-10 border-t border-white/20">
               <p className="text-sm font-bold mb-4 uppercase tracking-widest">Follow Us</p>
               <div className="flex gap-4">
-                <a href="#" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Facebook size={20} /></a>
-                <a href="#" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Twitter size={20} /></a>
-                <a href="#" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Instagram size={20} /></a>
-                <a href="#" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Linkedin size={20} /></a>
+                <a href="https://www.facebook.com/profile.php?id=100081002813069" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Facebook size={20} /></a>
+                <a href="https://x.com/SomalilandWome2" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Twitter size={20} /></a>
+                <a href="https://www.instagram.com/p/DVof7nwCBSd/" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Instagram size={20} /></a>
+                <a href="https://www.linkedin.com/in/lucky-kassim-22005514b?utm_source=share_via&utm_content=profile&utm_medium=member_ios" className="bg-white/20 p-2 rounded hover:bg-white hover:text-orange-500 transition"><Linkedin size={20} /></a>
               </div>
             </div>
           </motion.div>
