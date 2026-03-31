@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { login } from "../../Api/client";
-import { Lock, Mail, Loader2, ArrowRight, Sparkles, Shield } from "lucide-react";
+import { login, getMe, setAuthToken, type AuthUser } from "../../Api/client";
+import { setCookie, removeCookie } from "../../lib/cookies";
+import {
+  Lock,
+  Mail,
+  Loader2,
+  ArrowRight,
+  Sparkles,
+  Shield,
+} from "lucide-react";
 
 function LogoImage({ className, alt }: { className?: string; alt: string }) {
   const [failed, setFailed] = useState(false);
   if (failed) {
     return (
-      <div className={`flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold ${className}`}>
+      <div
+        className={`flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white font-bold ${className}`}
+      >
         S
       </div>
     );
@@ -29,22 +39,43 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: string })?.from ?? "/admin/dashboard";
+  const from =
+    (location.state as { from?: string })?.from ?? "/admin/dashboard";
+
+  const persistUserCookie = (user: AuthUser) => {
+    setCookie("swrc_user", JSON.stringify(user));
+  };
+
+  // ✅ Check token cookie on mount
+  useEffect(() => {
+    getMe()
+      .then((user) => {
+        persistUserCookie(user);
+        navigate(from, { replace: true });
+      })
+      .catch(() => {
+        removeCookie("swrc_user");
+      });
+  }, [navigate, from]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
+      const loginResult = await login(email, password);
+      setAuthToken(loginResult.token);
+      persistUserCookie(loginResult.user);
+      navigate(from, { replace: true }); // navigate after user verified
     } catch (err) {
+      setAuthToken(null);
+      removeCookie("swrc_user");
       setError(err instanceof Error ? err.message : "Login failed");
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex">
       {/* Left: Branding panel */}
@@ -59,13 +90,16 @@ export default function AdminLogin() {
           <div>
             <div className="flex items-center gap-2 text-amber-400/90 mb-4">
               <Sparkles className="w-5 h-5" />
-              <span className="text-sm font-medium tracking-wide">Secure Admin Access</span>
+              <span className="text-sm font-medium tracking-wide">
+                Secure Admin Access
+              </span>
             </div>
             <h2 className="text-3xl xl:text-4xl font-bold text-white leading-tight max-w-sm">
               Manage your content with confidence.
             </h2>
             <p className="text-slate-400 mt-4 text-lg max-w-sm leading-relaxed">
-              Sign in to update publications, stories, media, and settings for the SWRC platform.
+              Sign in to update publications, stories, media, and settings for
+              the SWRC platform.
             </p>
           </div>
           <div className="flex items-center gap-3 text-slate-500 text-sm">
@@ -87,15 +121,24 @@ export default function AdminLogin() {
             {/* Logo header */}
             <div className="pt-10 pb-6 px-8 flex flex-col items-center">
               <div className="w-20 h-20 rounded-xl bg-white shadow-lg shadow-slate-200/50 border border-slate-100 flex items-center justify-center overflow-hidden p-2">
-                <LogoImage alt="SWRC" className="w-full h-full object-contain" />
+                <LogoImage
+                  alt="SWRC"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <p className="text-slate-500 text-sm mt-3 font-medium">Content Manager</p>
+              <p className="text-slate-500 text-sm mt-3 font-medium">
+                Content Manager
+              </p>
             </div>
 
             <div className="px-8 pb-10">
               <div className="text-center mb-6">
-                <h1 className="text-xl font-bold text-slate-900">Welcome back</h1>
-                <p className="text-slate-500 mt-1 text-sm">Sign in to your admin account</p>
+                <h1 className="text-xl font-bold text-slate-900">
+                  Welcome back
+                </h1>
+                <p className="text-slate-500 mt-1 text-sm">
+                  Sign in to your admin account
+                </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -106,7 +149,10 @@ export default function AdminLogin() {
                 )}
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-slate-700 mb-1.5"
+                  >
                     Email
                   </label>
                   <div className="relative group">
@@ -125,7 +171,10 @@ export default function AdminLogin() {
                 </div>
 
                 <div>
-                  <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1.5">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium text-slate-700 mb-1.5"
+                  >
                     Password
                   </label>
                   <div className="relative group">

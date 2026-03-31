@@ -6,6 +6,27 @@
 const RAW_API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
 // Allow either ".../api" or host root in env without creating "/api/api/*" URLs.
 const API_BASE = RAW_API_BASE.replace(/\/api\/?$/, "");
+const AUTH_TOKEN_KEY = "swrc_token";
+
+function readAuthToken(): string | null {
+  try {
+    return localStorage.getItem(AUTH_TOKEN_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setAuthToken(token: string | null | undefined): void {
+  try {
+    if (token) {
+      localStorage.setItem(AUTH_TOKEN_KEY, token);
+    } else {
+      localStorage.removeItem(AUTH_TOKEN_KEY);
+    }
+  } catch {
+    // ignore storage issues
+  }
+}
 
 export async function api<T>(
   path: string,
@@ -14,8 +35,9 @@ export async function api<T>(
   const { token, ...init } = options;
   const headers = new Headers(init.headers as HeadersInit);
   headers.set("Content-Type", "application/json");
-  if (token) {
-    headers.set("Authorization", `Bearer ${token}`);
+  const authToken = token ?? readAuthToken();
+  if (authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
   }
 
   const res = await fetch(`${API_BASE}${path}`, {
@@ -38,9 +60,13 @@ export async function apiForm<T>(
   path: string,
   method: string,
   body: FormData,
-  _token?: string | null
+  token?: string | null
 ): Promise<T> {
   const headers = new Headers();
+  const authToken = token ?? readAuthToken();
+  if (authToken) {
+    headers.set("Authorization", `Bearer ${authToken}`);
+  }
 
   const res = await fetch(`${API_BASE}${path}`, {
     method,
@@ -65,7 +91,10 @@ export interface AuthUser {
   role: string;
 }
 
-export async function login(email: string, password: string): Promise<{ user: AuthUser }> {
+export async function login(
+  email: string,
+  password: string
+): Promise<{ user: AuthUser; token?: string | null }> {
   return api("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
@@ -75,10 +104,12 @@ export async function login(email: string, password: string): Promise<{ user: Au
 
 export async function logout(): Promise<void> {
   await api("/api/auth/logout", { method: "POST", token: null });
+  setAuthToken(null);
 }
 
 export async function getMe(): Promise<AuthUser> {
   return api("/api/auth/me");
+  
 }
 
 export interface AdminUser {

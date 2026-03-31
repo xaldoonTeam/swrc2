@@ -98,7 +98,7 @@ const Footer: React.FC = () => {
 
       {/* Bottom Bar */}
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/10 text-center text-gray-500 text-sm">
-        <p>&copy; {new Date().getFullYear()} Somaliland Women's Resource Centre. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} <a className='font-semibold text-gray-200' href="https://somalifytech.com" target="_blank" rel="noopener noreferrer">Somalify Tech Solutions.</a> All Rights Reserved.</p>
       </div>
     </footer>
   );

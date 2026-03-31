@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { getCookie } from "../../lib/cookies";
+import { getCookie, removeCookie } from "../../lib/cookies";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Search,
@@ -61,8 +61,10 @@ export default function AdminSidebar({ darkMode, setDarkMode: _setDarkMode, sear
   }, [user.role]);
 
   const handleLogout = async () => {
-    const { logout } = await import("../../Api/client");
+    const { logout, setAuthToken } = await import("../../Api/client");
     await logout().catch(() => {});
+    setAuthToken(null);
+    removeCookie("swrc_user");
     navigate("/admin/login", { replace: true });
   };
 

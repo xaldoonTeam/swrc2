@@ -99,7 +99,7 @@ export default function AdminPublications() {
 
   if (error) {
     return (
-      <div className={`rounded-2xl p-6 ${c.error}`}>
+      <div className={`rounded p-6 ${c.error}`}>
         <p className="font-medium">Couldn’t load publications</p>
         <p className="text-sm mt-1 opacity-90">{error}</p>
       </div>
@@ -153,7 +153,7 @@ export default function AdminPublications() {
       {/* Content */}
       {filtered.length === 0 ? (
         <div className={`rounded border border-dashed p-12 text-center ${c.emptyState}`}>
-          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${c.emptyIcon}`}>
+          <div className={`w-16 h-16 rounded flex items-center justify-center mx-auto mb-4 ${c.emptyIcon}`}>
             <Inbox className="w-8 h-8" />
           </div>
           <h3 className={`text-lg font-semibold mb-1 ${c.emptyTitle}`}>
@@ -168,7 +168,7 @@ export default function AdminPublications() {
             <button
               type="button"
               onClick={() => { setEditingPublication(null); setModalOpen(true); }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 transition"
             >
               <Plus className="w-4 h-4" />
               Add publication
