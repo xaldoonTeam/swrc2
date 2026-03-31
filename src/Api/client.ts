@@ -3,7 +3,7 @@
  * Auth uses cookies (swrc_token) - ensure credentials: 'include' for same-origin or CORS.
  */
 
-const RAW_API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
+const RAW_API_BASE = import.meta.env.VITE_API_URL ?? "https://api-swrc.up.railway.app/api";
 // Allow either ".../api" or host root in env without creating "/api/api/*" URLs.
 const API_BASE = RAW_API_BASE.replace(/\/api\/?$/, "");
 const AUTH_TOKEN_KEY = "swrc_token";
