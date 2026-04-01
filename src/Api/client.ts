@@ -32,19 +32,53 @@ export async function api<T>(
   path: string,
   options: RequestInit & { token?: string | null } = {}
 ): Promise<T> {
-  const { token, ...init } = options;
-  const headers = new Headers(init.headers as HeadersInit);
-  headers.set("Content-Type", "application/json");
-  const authToken = token ?? readAuthToken();
-  if (authToken) {
-    headers.set("Authorization", `Bearer ${authToken}`);
-  }
+  const makeRequest = async (): Promise<Response> => {
+    const { token, ...init } = options;
+    const headers = new Headers(init.headers as HeadersInit);
+    headers.set("Content-Type", "application/json");
+    const authToken = token ?? readAuthToken();
+    if (authToken) {
+      headers.set("Authorization", `Bearer ${authToken}`);
+    }
 
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
-    headers,
-    credentials: "include",
-  });
+    return fetch(`${API_BASE}${path}`, {
+      ...init,
+      headers,
+      credentials: "include",
+    });
+  };
+
+  const tryRefresh = async (): Promise<boolean> => {
+    if (path === "/api/auth/login" || path === "/api/auth/logout" || path === "/api/auth/refresh") {
+      return false;
+    }
+    try {
+      const refreshRes = await fetch(`${API_BASE}/api/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (!refreshRes.ok) {
+        setAuthToken(null);
+        return false;
+      }
+      const data = (await refreshRes.json().catch(() => ({}))) as { token?: string | null };
+      if (data?.token) {
+        setAuthToken(data.token);
+      }
+      return true;
+    } catch {
+      setAuthToken(null);
+      return false;
+    }
+  };
+
+  let res = await makeRequest();
+  if (res.status === 401) {
+    const refreshed = await tryRefresh();
+    if (refreshed) {
+      res = await makeRequest();
+    }
+  }
 
   if (!res.ok) {
     const err = (await res.json().catch(() => ({}))) as { error?: string };
@@ -62,18 +96,38 @@ export async function apiForm<T>(
   body: FormData,
   token?: string | null
 ): Promise<T> {
-  const headers = new Headers();
-  const authToken = token ?? readAuthToken();
-  if (authToken) {
-    headers.set("Authorization", `Bearer ${authToken}`);
-  }
+  const makeRequest = async (): Promise<Response> => {
+    const headers = new Headers();
+    const authToken = token ?? readAuthToken();
+    if (authToken) {
+      headers.set("Authorization", `Bearer ${authToken}`);
+    }
+    return fetch(`${API_BASE}${path}`, {
+      method,
+      headers,
+      body,
+      credentials: "include",
+    });
+  };
 
-  const res = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers,
-    body,
-    credentials: "include",
-  });
+  let res = await makeRequest();
+  if (res.status === 401 && path !== "/api/auth/login" && path !== "/api/auth/logout" && path !== "/api/auth/refresh") {
+    try {
+      const refreshRes = await fetch(`${API_BASE}/api/auth/refresh`, {
+        method: "POST",
+        credentials: "include",
+      });
+      if (refreshRes.ok) {
+        const data = (await refreshRes.json().catch(() => ({}))) as { token?: string | null };
+        if (data?.token) setAuthToken(data.token);
+        res = await makeRequest();
+      } else {
+        setAuthToken(null);
+      }
+    } catch {
+      setAuthToken(null);
+    }
+  }
 
   if (!res.ok) {
     const err = (await res.json().catch(() => ({}))) as { error?: string };
