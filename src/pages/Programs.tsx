@@ -5,6 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { programs as programsApi, type Program } from '../Api/client';
 import { getProgramIcon } from '../lib/programIcons';
 
+const limitWords = (text: string = "", limit: number = 20) => {
+  const words = text.split(" ");
+  return words.slice(0, limit).join(" ") + (words.length > limit ? "..." : "");
+};
+
 const ProgramCard = ({ icon: Icon, title, desc, slug, delay }: any) => (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
@@ -19,7 +24,7 @@ const ProgramCard = ({ icon: Icon, title, desc, slug, delay }: any) => (
     </div>
     <h3 className="text-xl font-bold mb-4 text-gray-900">{title}</h3>
     <p className="text-gray-500 text-sm leading-relaxed mb-6">
-      {desc}
+    {limitWords(desc, 20)}
     </p>
     <Link 
       to={slug ? `/programs/${slug}` : `/programs/${title.toLowerCase().replace(/\s+/g, "-")}`}

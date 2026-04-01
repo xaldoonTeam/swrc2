@@ -33,6 +33,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import RequireRoleAdmin from "./pages/admin/RequireRoleAdmin";
 import FullStoryPage from "./pages/fullStory";
 import ApplyProgram from "./pages/applyForm";
+import ResearchPage from "./pages/Research";
 
 const RootLayout = () => (
   <div>
@@ -58,7 +59,7 @@ export const router = createBrowserRouter([
           { path: "stories/:slug", element: <StoryDetail /> },
           { path: "contact", element: <Contact /> },
           { path: "report", element: <ReportsPage /> },
-          // { path: "research", element: <ResearchPage /> },
+          { path: "research", element: <ResearchPage /> },
           { path: "publications", element: <ReportsPage /> },
           { path: "fullstory", element: <FullStoryPage /> },
           { path: "newsletters", element: <NewsletterPage /> },

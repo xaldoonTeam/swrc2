@@ -218,7 +218,7 @@ const ReportsPage: React.FC = () => {
           </p>
           </div>
           <div>
-            <button onClick={() => navigate('/report')} className="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition shadow-sm">Research</button>
+            <button onClick={() => navigate('/research')} className="bg-orange-500 text-white px-4 py-2 rounded text-sm font-bold hover:bg-orange-600 transition shadow-sm">Research</button>
           </div>
         </div>
 
