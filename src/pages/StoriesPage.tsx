@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Quote, ArrowRight, Loader2 } from 'lucide-react';
 import { stories as storiesApi, assetUrl, type Story } from '../Api/client';
+import { isTeamMember } from '../content/team';
 
 const StoryCard = ({ name, image, role, category, story }: any) => (
   <motion.div 
@@ -60,7 +61,7 @@ const StoriesPage: React.FC = () => {
     setError(null);
     storiesApi
       .list()
-      .then((data: Story[]) => setStories(data.map((s) => ({ name: s.name, role: s.role, category: s.category, image: s.imageUrl ? assetUrl(s.imageUrl) : null, story: s.story }))))
+      .then((data: Story[]) => setStories(data.filter((s) => !isTeamMember(s.category)).map((s) => ({ name: s.name, role: s.role, category: s.category, image: s.imageUrl ? assetUrl(s.imageUrl) : null, story: s.story }))))
       .catch(() => {
         setError('Could not load stories.');
         setStories(FALLBACK_STORIES);

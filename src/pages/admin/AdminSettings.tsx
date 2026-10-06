@@ -67,7 +67,7 @@ export default function AdminSettings() {
           Settings
         </h1>
         <p className={`${c.subtitle} mt-1 text-sm`}>
-          Edit text shown on the About Us page and in the footer.
+          Edit text shown on the About Us page and in the footer. Home page sections are edited under Landing page.
         </p>
       </div>
 

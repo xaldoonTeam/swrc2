@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Search,
   LayoutDashboard,
+  Home,
   FileText,
   BarChart3,
   Briefcase,
@@ -21,11 +22,13 @@ import { FaUser } from "react-icons/fa";
 
 const baseNavItems = [
   { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/admin/landing", label: "Landing page", icon: Home },
   { to: "/admin/publications", label: "Publications", icon: FileText },
-  { to: "/admin/newsletters", label: "Newsletters", icon: Mail },
+  { to: "/admin/news", label: "News", icon: Mail },
   { to: "/admin/research", label: "Research", icon: BarChart3 },
   { to: "/admin/programs", label: "Programs", icon: Briefcase },
   { to: "/admin/stories", label: "Stories", icon: Heart },
+  { to: "/admin/team", label: "Team", icon: Users },
   { to: "/admin/media", label: "Media", icon: Video },
   { to: "/admin/settings", label: "Settings", icon: Settings },
   { to: "/admin/profile", label: "Profile", icon: User },

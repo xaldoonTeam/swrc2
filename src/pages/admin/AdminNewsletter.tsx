@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, assetUrl, type Newsletter } from "../../Api/client";
+import { isStoredLandingItem } from "../../content/landingApi";
 import AddNewsletterModal from "./AddNewsletterModal";
 import { useAdminTheme } from "../../contexts/AdminThemeContext";
 import { adminClasses } from "../../lib/adminTheme";
@@ -31,7 +32,7 @@ function fetchList(
   setError("");
   api<Newsletter[]>("/api/newsletters/admin/list")
     .then(setList)
-    .catch((e) => setError(e instanceof Error ? e.message : "Failed to load newsletters"));
+    .catch((e) => setError(e instanceof Error ? e.message : "Failed to load news"));
 }
 
 export default function AdminNewsletter() {
@@ -76,7 +77,7 @@ export default function AdminNewsletter() {
   useEffect(() => {
     api<Newsletter[]>("/api/newsletters/admin/list")
       .then(setList)
-      .catch((e) => setError(e instanceof Error ? e.message : "Failed to load newsletters"))
+      .catch((e) => setError(e instanceof Error ? e.message : "Failed to load news"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -84,9 +85,10 @@ export default function AdminNewsletter() {
 
   const filtered = list.filter(
     (n) =>
-      !search ||
-      n.title.toLowerCase().includes(search.toLowerCase()) ||
-      (n.summary && n.summary.toLowerCase().includes(search.toLowerCase()))
+      !isStoredLandingItem(n.title) &&
+      (!search ||
+        n.title.toLowerCase().includes(search.toLowerCase()) ||
+        (n.summary && n.summary.toLowerCase().includes(search.toLowerCase())))
   );
 
   const formatDate = (s: string) => {
@@ -101,7 +103,7 @@ export default function AdminNewsletter() {
     return (
       <div className="flex flex-col items-center justify-center py-24 gap-4">
         <Loader2 className="w-10 h-10 text-orange-400 animate-spin" />
-        <p className={c.loading}>Loading newsletters…</p>
+        <p className={c.loading}>Loading news…</p>
       </div>
     );
   }
@@ -109,7 +111,7 @@ export default function AdminNewsletter() {
   if (error) {
     return (
       <div className={`rounded p-6 ${c.error}`}>
-        <p className="font-medium">Couldn't load newsletters</p>
+        <p className="font-medium">Couldn't load news</p>
         <p className="text-sm mt-1 opacity-90">{error}</p>
         <p className="text-sm mt-2 opacity-80">
           Make sure you're logged in and the backend server is running.
@@ -133,9 +135,9 @@ export default function AdminNewsletter() {
             <Mail className="w-5 h-5" />
           </span>
           <div>
-            <h1 className={`text-2xl font-bold ${c.title}`}>Newsletters</h1>
+            <h1 className={`text-2xl font-bold ${c.title}`}>News</h1>
             <p className={`${c.subtitle} -mt-1 text-sm`}>
-              Create and manage newsletters. Publish or unpublish to control visibility.
+              Create and manage news. Publish or unpublish to control visibility.
             </p>
           </div>
         </div>
@@ -145,7 +147,7 @@ export default function AdminNewsletter() {
           className="flex items-center gap-2 px-4 py-2.5 rounded bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 transition shadow-lg shadow-orange-500/20"
         >
           <Plus className="w-4 h-4" />
-          Add newsletter
+          Add news
         </button>
       </div>
 
@@ -166,11 +168,11 @@ export default function AdminNewsletter() {
             <Inbox className="w-8 h-8" />
           </div>
           <h3 className={`text-lg font-semibold mb-1 ${c.emptyTitle}`}>
-            {list.length === 0 ? "No newsletters yet" : "No matches"}
+            {list.length === 0 ? "No news yet" : "No matches"}
           </h3>
           <p className={`${c.emptySubtitle} text-sm max-w-sm mx-auto mb-6`}>
             {list.length === 0
-              ? "Add your first newsletter. You can publish or unpublish anytime."
+              ? "Add your first news. You can publish or unpublish anytime."
               : "Try a different search term."}
           </p>
           {list.length === 0 && (
@@ -180,7 +182,7 @@ export default function AdminNewsletter() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-orange-500 text-white font-medium text-sm hover:bg-orange-600 transition"
             >
               <Plus className="w-4 h-4" />
-              Add newsletter
+              Add news
             </button>
           )}
         </div>
@@ -275,7 +277,7 @@ export default function AdminNewsletter() {
         isOpen={!!deletingNewsletter}
         onClose={() => !deleteLoading && setDeletingNewsletter(null)}
         onConfirm={handleDelete}
-        title="Delete newsletter"
+        title="Delete news"
         message={deletingNewsletter ? `Are you sure you want to delete "${deletingNewsletter.title}"? This action cannot be undone.` : ""}
         confirmLabel="Delete"
         variant="danger"

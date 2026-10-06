@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { programs as programsApi, type Program } from "../Api/client";
 import { getProgramIcon } from "../lib/programIcons";
+import { useLanding } from "../content/LandingContext";
 
 // ✅ helper
 const limitWords = (text: string = "", limit: number = 20) => {
@@ -66,6 +67,7 @@ const ProgramCard = ({ icon: Icon, title, desc, slug, index }: ProgramCardProps)
 };
 
 const Programs = () => {
+  const { programs: programsSection } = useLanding();
   const [programs, setPrograms] = useState<ProgramCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -94,9 +96,9 @@ const Programs = () => {
 
   return (
     <section className="bg-[#2D241E] py-20 px-6 text-center">
-      <p className="text-orange-400 mb-2">Our Programs</p>
+      <p className="text-orange-400 mb-2">{programsSection.eyebrow}</p>
       <h2 className="text-3xl md:text-4xl font-bold text-white mb-12">
-        Equipping women for success
+        {programsSection.heading}
       </h2>
 
       {/* ✅ Loading */}
@@ -124,10 +126,10 @@ const Programs = () => {
   transition={{ delay: 0.4 }}
 >
   <Link
-    to="/programs"
+    to={programsSection.ctaLink}
     className="inline-block bg-orange-500 text-white px-8 py-3 rounded font-medium text-sm mt-4 hover:bg-orange-600 transition-all shadow-lg"
   >
-    View All Programs
+    {programsSection.ctaText}
   </Link>
 </motion.div>
     </section>

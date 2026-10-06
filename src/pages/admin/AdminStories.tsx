@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { api, assetUrl, type Story } from "../../Api/client";
+import { isTeamMember } from "../../content/team";
 import AddStoryModal from "./AddStoryModal";
 import { useAdminTheme } from "../../contexts/AdminThemeContext";
 import { adminClasses } from "../../lib/adminTheme";
@@ -79,14 +80,17 @@ export default function AdminStories() {
 
   const refreshList = () => fetchList(setList);
 
-  const filtered = list.filter(
-    (s) =>
-      !search ||
-      s.name.toLowerCase().includes(search.toLowerCase()) ||
-      s.role.toLowerCase().includes(search.toLowerCase()) ||
-      s.category.toLowerCase().includes(search.toLowerCase()) ||
-      (s.story && s.story.toLowerCase().includes(search.toLowerCase()))
-  );
+  const filtered = list.filter((s) => {
+    if (isTeamMember(s.category)) return false;
+    if (!search) return true;
+    const q = search.toLowerCase();
+    return (
+      s.name.toLowerCase().includes(q) ||
+      s.role.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q) ||
+      Boolean(s.story && s.story.toLowerCase().includes(q))
+    );
+  });
 
   if (loading) {
     return (

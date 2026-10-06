@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Mail, Calendar, ArrowRight, Loader2 } from "lucide-react";
 import { newsletters as newslettersApi, assetUrl, type Newsletter } from "../Api/client";
+import { isStoredLandingItem } from "../content/landingApi";
 
 function formatDate(s: string) {
   try {
@@ -20,7 +21,7 @@ const NewsletterCard = ({ n, index }: { n: Newsletter; index: number }) => (
     viewport={{ once: true, margin: "-20px" }}
     className="bg-white rounded overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group h-full flex flex-col"
   >
-    <Link to={`/newsletters/${n.slug}`} className="flex flex-col h-full">
+    <Link to={`/news/${n.slug}`} className="flex flex-col h-full">
       <div className="aspect-[16/10] bg-orange-50 overflow-hidden">
         {n.imageUrl ? (
           <img
@@ -65,9 +66,9 @@ const NewsletterPage: React.FC = () => {
     setError(null);
     newslettersApi
       .list()
-      .then(setList)
+      .then((items) => setList(items.filter((item) => !isStoredLandingItem(item.title))))
       .catch(() => {
-        setError("Could not load newsletters.");
+        setError("Could not load news.");
         setList([]);
       })
       .finally(() => setLoading(false));
@@ -83,7 +84,7 @@ const NewsletterPage: React.FC = () => {
           className="max-w-4xl mx-auto text-center text-white"
         >
           <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-3">
-            Newsletters
+            News
           </h1>
           <p className="text-white/90 text-base max-w-xl mx-auto">
             Stay updated with SWRC news, program highlights, and stories from our community.
@@ -96,19 +97,19 @@ const NewsletterPage: React.FC = () => {
         {loading && (
           <div className="flex flex-col items-center justify-center py-24 gap-4">
             <Loader2 className="w-10 h-10 text-orange-500 animate-spin" />
-            <p className="text-gray-500">Loading newsletters…</p>
+            <p className="text-gray-500">Loading news…</p>
           </div>
         )}
         {error && !loading && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 text-center text-amber-800">
             <p className="font-medium">{error}</p>
-            <p className="text-sm mt-1">Start the backend to load newsletters from the database.</p>
+            <p className="text-sm mt-1">Start the backend to load news from the database.</p>
           </div>
         )}
         {!loading && !error && list.length === 0 && (
           <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center">
             <Mail className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-gray-900 mb-2">No newsletters yet</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-2">No news yet</h2>
             <p className="text-gray-500">Check back later for updates from SWRC.</p>
           </div>
         )}

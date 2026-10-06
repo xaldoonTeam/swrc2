@@ -2,13 +2,11 @@ import React from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useLanding } from '../content/LandingContext';
+import { landingImage } from '../content/landing';
 const WelcomeSection: React.FC = () => {
-  const features = [
-    "Skills for Employment", 
-    "Mentorship & Leadership Development", 
-    "Women’s Rights & GBV Prevention",
-    "Climate Action & Community Resilience"
-  ];
+  const { welcome } = useLanding();
+  const features = welcome.features;
 
 
   // Animation variants
@@ -111,9 +109,9 @@ const WelcomeSection: React.FC = () => {
             className="absolute top-0 left-0 w-4/5 h-4/5 overflow-hidden rounded-[1rem] shadow-xl cursor-pointer"
           >
             <motion.img 
-              src="/welcome.jpg" 
+              src={landingImage(welcome.imageMain)} 
               className="w-full h-full object-cover"
-              alt="Women training group"
+              alt={welcome.imageMainAlt}
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.4 }}
             />
@@ -134,9 +132,9 @@ const WelcomeSection: React.FC = () => {
             className="absolute bottom-0 right-0 w-3/5 h-3/5 overflow-hidden rounded-[1rem] border-[10px] border-white shadow-2xl z-10 cursor-pointer"
           >
             <motion.img 
-              src="/dumar.jpg" 
+              src={landingImage(welcome.imageOverlay)} 
               className="w-full h-full object-cover"
-              alt="Woman smiling"
+              alt={welcome.imageOverlayAlt}
               whileHover={{ scale: 1.15 }}
               transition={{ duration: 0.4 }}
             />
@@ -171,11 +169,11 @@ const WelcomeSection: React.FC = () => {
         >
           <div className="space-y-6 md:space-y-8">
             <motion.h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-[1.15]">
-              Somaliland <br className="hidden md:block" /> 
-              <span className="text-orange-500">Women's Resource Centre !</span>
+              {welcome.titleLine1} <br className="hidden md:block" /> 
+              <span className="text-orange-500">{welcome.titleHighlight}</span>
             </motion.h2>
             <motion.p className="text-gray-600 text-base md:text-lg leading-relaxed pr-4">
-              Empowering young women with the skills, knowledge, and leadership to build careers, claim their rights, and create resilient communities.
+              {welcome.paragraph}
             </motion.p>
           </div>
 
@@ -212,8 +210,8 @@ const WelcomeSection: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="bg-orange-500 text-white px-10 py-2 md:px-12 md:py-3 rounded font-bold text-lg shadow-lg shadow-orange-200 hover:bg-orange-600 transition-all duration-300"
             >
-              <Link to="/about" className="flex items-center gap-2">
-              Read more
+              <Link to={welcome.ctaLink} className="flex items-center gap-2">
+              {welcome.ctaText}
               </Link>
             </motion.button>
           </motion.div>

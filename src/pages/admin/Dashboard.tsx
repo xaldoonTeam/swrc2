@@ -7,6 +7,7 @@ import {
   BarChart3,
   Briefcase,
   Heart,
+  Users,
   Video,
   ChevronRight,
   TrendingUp,
@@ -14,14 +15,17 @@ import {
   Loader2,
 } from "lucide-react";
 import { api } from "../../Api/client";
+import { isStoredLandingItem } from "../../content/landingApi";
+import { isTeamMember } from "../../content/team";
 import { useAdminTheme } from "../../contexts/AdminThemeContext";
 
 const contentSections = [
   { key: "publications", label: "Publications", to: "/admin/publications", icon: FileText, color: "from-amber-500/20 to-orange-500/20 text-amber-400" },
-  { key: "newsletters", label: "Newsletters", to: "/admin/newsletters", icon: Mail, color: "from-orange-500/20 to-amber-500/20 text-orange-400" },
+  { key: "newsletters", label: "News", to: "/admin/news", icon: Mail, color: "from-orange-500/20 to-amber-500/20 text-orange-400" },
   { key: "research", label: "Research", to: "/admin/research", icon: BarChart3, color: "from-blue-500/20 to-indigo-500/20 text-blue-400" },
   { key: "programs", label: "Programs", to: "/admin/programs", icon: Briefcase, color: "from-emerald-500/20 to-teal-500/20 text-emerald-400" },
   { key: "stories", label: "Stories", to: "/admin/stories", icon: Heart, color: "from-rose-500/20 to-pink-500/20 text-rose-400" },
+  { key: "team", label: "Team", to: "/admin/team", icon: Users, color: "from-orange-500/20 to-amber-500/20 text-orange-400" },
   { key: "media", label: "Media", to: "/admin/media", icon: Video, color: "from-violet-500/20 to-purple-500/20 text-violet-400" },
 ];
 
@@ -33,6 +37,7 @@ export default function Dashboard() {
     research: 0,
     programs: 0,
     stories: 0,
+    team: 0,
     media: 0,
   });
   const [loading, setLoading] = useState(true);
@@ -54,13 +59,36 @@ export default function Dashboard() {
     Promise.all(
       endpoints.map(({ key, path }) =>
         api<unknown[]>(path)
-          .then((arr) => ({ key, count: arr.length }))
-          .catch(() => ({ key, count: 0 }))
+          .then((arr) => {
+            if (key === "newsletters") {
+              const count = arr.filter((item) => {
+                const title =
+                  item && typeof item === "object" && "title" in item
+                    ? String((item as { title?: unknown }).title ?? "")
+                    : "";
+                return !isStoredLandingItem(title);
+              }).length;
+              return { key, count };
+            }
+            if (key === "stories") {
+              const members = arr.filter((item) => {
+                const category =
+                  item && typeof item === "object" && "category" in item
+                    ? String((item as { category?: unknown }).category ?? "")
+                    : "";
+                return isTeamMember(category);
+              }).length;
+              return { key, count: arr.length - members, team: members };
+            }
+            return { key, count: arr.length };
+          })
+          .catch(() => ({ key, count: 0, team: key === "stories" ? 0 : undefined }))
       )
     ).then((results) => {
       const next: Record<string, number> = {};
-      results.forEach(({ key, count }) => {
+      results.forEach(({ key, count, team }) => {
         next[key] = count;
+        if (typeof team === "number") next.team = team;
       });
       setCounts(next);
       setLoading(false);

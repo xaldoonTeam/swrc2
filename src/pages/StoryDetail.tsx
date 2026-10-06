@@ -15,6 +15,7 @@ import {
   Heart,
 } from "lucide-react";
 import { stories as storiesApi, assetUrl, type Story } from "../Api/client";
+import { isTeamMember } from "../content/team";
 
 const FALLBACK_STORIES: Array<{ name: string; role: string; category: string; image: string; story: string }> = [
   { name: "Muna", role: "SWRC Graduate", category: "Education", image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80", story: "Muna gained essential job-hunting skills, from building a strong CV to mastering interviews." },
@@ -47,7 +48,7 @@ export default function StoryDetail() {
     storiesApi
       .list()
       .then((list) => {
-        const match = list.find((s) => slugFromName(s.name) === slug);
+        const match = list.find((s) => !isTeamMember(s.category) && slugFromName(s.name) === slug);
         if (match) setStory(match);
         else setError("Story not found");
       })

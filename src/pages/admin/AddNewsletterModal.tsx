@@ -76,7 +76,7 @@ export default function AddNewsletterModal({ isOpen, onClose, onSuccess, newslet
       handleClose();
       onSuccess();
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to ${isEdit ? "update" : "add"} newsletter`);
+      setError(err instanceof Error ? err.message : `Failed to ${isEdit ? "update" : "add"} news`);
     } finally {
       setLoading(false);
     }
@@ -88,7 +88,7 @@ export default function AddNewsletterModal({ isOpen, onClose, onSuccess, newslet
     <div className="fixed inset-0 z-50 flex items-center -mt-20 justify-center bg-black/60 backdrop-blur-sm">
       <div className="w-full max-w-lg bg-[#252945] rounded border border-slate-700/50 shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700/50">
-          <h2 className="text-lg font-bold text-white">{isEdit ? "Edit newsletter" : "Add newsletter"}</h2>
+          <h2 className="text-lg font-bold text-white">{isEdit ? "Edit news" : "Add news"}</h2>
           <button
             type="button"
             onClick={handleClose}
@@ -110,7 +110,7 @@ export default function AddNewsletterModal({ isOpen, onClose, onSuccess, newslet
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              placeholder="e.g. March 2024 Newsletter"
+              placeholder="e.g. March 2024 News"
               className="w-full px-4 py-2 rounded bg-slate-800/50 border border-slate-600/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50"
             />
           </div>
@@ -155,7 +155,7 @@ export default function AddNewsletterModal({ isOpen, onClose, onSuccess, newslet
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={6}
-              placeholder="Newsletter content..."
+              placeholder="News content..."
               className="w-full px-4 py-2 rounded bg-slate-800/50 border border-slate-600/50 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 resize-none"
             />
           </div>
@@ -191,7 +191,7 @@ export default function AddNewsletterModal({ isOpen, onClose, onSuccess, newslet
                 {isEdit ? "Updating…" : "Adding…"}
               </>
             ) : (
-              isEdit ? "Update newsletter" : "Add newsletter"
+              isEdit ? "Update news" : "Add news"
             )}
           </button>
         </div>

@@ -4,11 +4,12 @@ import AlumniSection from "../components/Stories"
 // import Feedback from "../components/feedback"
 import Welcone from "../components/WelcomeSection"
 import PartnersSection from "../components/PartnersSection"
+import { LandingProvider } from "../content/LandingContext"
 // import BlogSection from "../components/Blog"
 
 export const Home = () => {
   return (
-    <>
+    <LandingProvider>
       <Hero />
       <Welcone />
       <Programs />
@@ -16,7 +17,7 @@ export const Home = () => {
       <AlumniSection />
       {/* <Feedback /> */}
       {/* <BlogSection /> */}
-    </>
+    </LandingProvider>
   );
 };
 

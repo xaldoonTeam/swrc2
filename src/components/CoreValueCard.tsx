@@ -28,12 +28,14 @@ export const TeamMember = ({ name, role, image, img }: any) => (
     className="bg-white rounded-lg p-6 flex flex-col items-center text-center border border-gray-100 hover:shadow-lg transition-shadow"
   >
     {/* Image */}
-    <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-sm">
-      <img 
-        src={image || img} 
-        alt={name} 
-        className="w-full h-full object-cover"
-      />
+    <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-sm bg-gray-100">
+      {(image || img) ? (
+        <img
+          src={image || img}
+          alt={name}
+          className="w-full h-full object-cover"
+        />
+      ) : null}
     </div>
 
     {/* Name and Role */}

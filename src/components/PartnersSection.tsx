@@ -1,18 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-
-
-const PARTNERS = [
-  { name: "Government", logo: "/somaliland.png" },
-  { name: "OXFAM", logo: "https://www.google.com/s2/favicons?domain=oxfam.org&sz=128" },
-  { name: "ActionAid", logo: "https://www.google.com/s2/favicons?domain=actionaid.org&sz=128" },
-  { name: "Plan International", logo: "https://www.google.com/s2/favicons?domain=plan-international.org&sz=128" },
-  { name: "Hargeisa CC", logo: "/xarunta.jpeg" },
-  { name: "HAVOYOCO", logo: "/hav.jpeg" },
-  { name: "NAFIS Network", logo: "/nafis.jpeg" },
-];
+import { useLanding } from "../content/LandingContext";
+import { landingImage } from "../content/landing";
 
 const PartnersSection: React.FC = () => {
+  const { partners } = useLanding();
   return (
     <section className="relative bg-white py-20 md:py-32 overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-bl from-orange-50/50 to-transparent pointer-events-none" />
@@ -26,11 +18,10 @@ const PartnersSection: React.FC = () => {
           className="text-center mb-16 md:mb-24"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight mb-6">
-            Our Partners
+            {partners.heading}
           </h2>
           <p className="text-slate-500 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-            We collaborate with government institutions, NGOs, and international 
-            organizations to expand opportunities for women.
+            {partners.description}
           </p>
         </motion.div>
 
@@ -42,14 +33,14 @@ const PartnersSection: React.FC = () => {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center items-center gap-12 md:gap-20"
         >
-          {PARTNERS.map((partner) => (
+          {partners.items.map((partner) => (
             <motion.div
-              key={partner.name}
+              key={`${partner.name}-${partner.logo}`}
               whileHover={{ scale: 1.05 }}
               className="group relative flex items-center justify-center"
             >
               <img
-                src={partner.logo}
+                src={landingImage(partner.logo)}
                 alt={partner.name}
                 className="h-10 md:h-12 w-auto object-contain transition-all duration-300 grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100"
               />

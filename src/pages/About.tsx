@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Target, Eye, Award, TrendingUp, Users, Handshake } from 'lucide-react';
 import { CoreValueCard, TeamMember} from '../components/CoreValueCard';
+import { stories as storiesApi, type Story } from '../Api/client';
+import { DEFAULT_TEAM, isTeamMember, teamImage } from '../content/team';
 
 const DEFAULT_HERO = "Empowering Women Through Education, Skills, And Opportunity.";
 const DEFAULT_ABOUT = "Founded in 2021, The Somaliland Women Resource Centre (SWRC) is a women-led initiative dedicated to bridging the gap between education and meaningful employment. We provide a safe, inclusive space for young women and girls to gain the practical skills, mentorship, and confidence needed to become leaders and change-makers in their communities.";
@@ -13,6 +15,7 @@ const AboutPage: React.FC = () => {
   const [aboutText, setAboutText] = useState(DEFAULT_ABOUT);
   const [vision, setVision] = useState(DEFAULT_VISION);
   const [mission, setMission] = useState(DEFAULT_MISSION);
+  const [team, setTeam] = useState(DEFAULT_TEAM);
 
   useEffect(() => {
     import('../Api/client').then(({ settings }) => {
@@ -23,6 +26,13 @@ const AboutPage: React.FC = () => {
         if (s.about_mission) setMission(s.about_mission);
       }).catch(() => {});
     });
+    storiesApi.list().then((rows: Story[]) => {
+      const published = rows
+        .filter((row) => isTeamMember(row.category))
+        .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+        .map((row) => ({ name: row.name, role: row.role, image: teamImage(row.imageUrl) }));
+      if (published.length > 0) setTeam(published);
+    }).catch(() => {});
   }, []);
 
   const values = [
@@ -66,15 +76,6 @@ const AboutPage: React.FC = () => {
       icon: <Handshake className="text-orange-500" size={24} />
     }
   ];
-    const team = [
-      { name: "Lucky Kassim", role: "Executive Director", image: "/lac.jpg" },
-      { name: "Farah Carab", role: "Admin & Finance Manager", image: "/feriha.jpg" },
-      { name: "nasteho bashir", role: "Communication Officer", image: "/nasteho.jpg" },
-      { name: "Idil Abdirashid Abdirahman", role: "procurement and logistics officer", image: "/idil.jpg" },
-      { name: "Samsam Abdi", role: "HR Officer", image: "/samsam.png" },
-      { name: "Sagal Adam", role: "Monitoring, Evaluation, Research and Learning (MERL) Officer", image: "/sagal.jpg" },
-      { name: "Awale Osman", role: "Finance Officer", image: "/awale.png" }
-    ];
   return (
     <div className="w-full bg-white">
       {/* Breadcrumb Navigation */}
@@ -206,8 +207,7 @@ const AboutPage: React.FC = () => {
             Meet our team
           </h1>
           <p className="text-gray-500 text-lg leading-relaxed">
-            Meet our exceptional team at Designflow! Comprising diverse talents and expertise, 
-            we are a dedicated group committed to delivering excellence in every project.
+            The people who lead programs, partnerships, and daily work at the Somaliland Women Resource Centre.
           </p>
         </div>
 

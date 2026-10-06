@@ -2,99 +2,43 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote, ArrowUpRight, Play, Pause } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const ALUMNI_STORIES = [
-  {
-    id: 1,
-    name: "Hanna",
-    title: "SWRC Graduate",
-    story: "Hanna participated in multiple trainings, gaining skills that strengthened her confidence, leadership, and career direction.",
-    quote: "The SWRC programs didnt just train me — they transformed my confidence and opened new opportunities for my future.",
-    image: "hanna.jpg",
-    achievement: "Project Officer",
-    location: "Baadi goob ORG",
-    color: "from-indigo-500 to-purple-600"
-  },
-  {
-    id: 2,
-    name: "Muna",
-    title: "SWRC Graduate",
-    story: "From learning basic coding to landing a software engineering role, Ahmed's journey shows the power of dedication and the right support system.",
-    quote: "I went from never writing a line of code to building production applications in less than a year.",
-    image: "muna.JPG",
-    achievement: "Software Engineer",
-    location: "hargiesa, Somaliland",
-    color: "from-blue-500 to-cyan-500"
-  },
-  {
-    id: 3,
-    name: "Nasra",
-    title: "SWRC Graduate",
-    story: "Through mentorship and training, Nasra gained essential skills, secured an internship, and is now working as an SGBV Counselor.",
-    quote: "SWRC did not just train me — it connected me to real opportunities that led to my career.",
-    image: "nasra.JPG",
-    achievement: "Project Officer",
-    location: "WAAPO ORG",
-    color: "from-amber-500 to-orange-500"
-  },
-  {
-    id: 4,
-    name: "hodo Hassan",
-    title: "SWRC Graduate",
-    story: "After military service, Carlos found new purpose in cybersecurity, protecting the digital frontier with the same dedication he served with.",
-    quote: "The skills are different, but the mission—protecting others—remains the same.",
-    image: "hodo.JPG",
-    achievement: "Bussiness owner",
-    location: "hargiesa, Somaliland",
-    color: "from-emerald-500 to-teal-500"
-  },
-    {
-    id: 5,
-    name: "Nasra",
-    title: "SWRC Graduate",
-    story: "Through mentorship and training, Nasra gained essential skills, secured an internship, and is now working as an SGBV Counselor.",
-    quote: "",
-    image: "nasra.JPG",
-    achievement: "Bussines owner",
-    location: "hargiesa, Somaliland",
-    color: "from-amber-500 to-orange-500"
-  },
-    {
-    id: 6,
-    name: "MAWAHIB",
-    title: "SWRC Graduate",
-    story: "Through the program, Mawahib gained essential skills, built confidence, and is now ready to pursue new opportunities and make a positive impact.",
-    quote: "The SWRC Employability Skills Training transformed my confidence and prepared me for real opportunities.",
-    image: "mawahin.JPG",
-    achievement: "works at Minister of Labour Social Affairs",
-    location: "hargiesa, Somaliland",
-    color: "from-blue-500 to-cyan-500"
-  }
-];
+import { useLanding } from "../content/LandingContext";
+import { landingImage } from "../content/landing";
 
 const AlumniStories: React.FC = () => {
+  const { alumni } = useLanding();
+  const stories = alumni.stories;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [direction, setDirection] = useState(0);
 
   const nextStory = () => {
+    if (stories.length === 0) return;
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % ALUMNI_STORIES.length);
+    setCurrentIndex((prev) => (prev + 1) % stories.length);
   };
 
   const prevStory = () => {
+    if (stories.length === 0) return;
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + ALUMNI_STORIES.length) % ALUMNI_STORIES.length);
+    setCurrentIndex((prev) => (prev - 1 + stories.length) % stories.length);
   };
 
-  const currentStory = ALUMNI_STORIES[currentIndex];
+  const currentStory = stories[currentIndex] ?? stories[0];
+
+  React.useEffect(() => {
+    if (currentIndex >= stories.length) setCurrentIndex(0);
+  }, [currentIndex, stories.length]);
 
   // Auto-play
   React.useEffect(() => {
-    if (!isPlaying) return;
-    const timer = setInterval(nextStory, 5000);
+    if (!isPlaying || stories.length === 0) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % stories.length);
+    }, 5000);
     return () => clearInterval(timer);
-  }, [isPlaying, currentIndex]);
+  }, [isPlaying, currentIndex, stories.length]);
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 py-20 overflow-hidden">
@@ -108,7 +52,7 @@ const AlumniStories: React.FC = () => {
           >
             <span className="w-2 h-2 bg-orange-600 rounded-full animate-pulse" />
             <span className="text-xs font-medium text-orange-600 uppercase tracking-wider">
-              Alumni Stories
+              {alumni.badge}
             </span>
           </motion.div>
 
@@ -118,7 +62,7 @@ const AlumniStories: React.FC = () => {
             transition={{ delay: 0.1 }}
             className="text-5xl md:text-7xl font-light text-slate-900 mb-4"
           >
-            Meet Our <span className="font-bold bg-gradient-to-r from-orange-600 to-purple-900 bg-clip-text text-transparent">Alumni</span>
+            {alumni.headingPrefix} <span className="font-bold bg-gradient-to-r from-orange-600 to-purple-900 bg-clip-text text-transparent">{alumni.headingHighlight}</span>
           </motion.h2>
           
           <motion.p
@@ -127,12 +71,12 @@ const AlumniStories: React.FC = () => {
             transition={{ delay: 0.2 }}
             className="text-slate-500 text-lg max-w-2xl mx-auto"
           >
-            Real stories from graduates who transformed their lives through our programs
+            {alumni.description}
           </motion.p>
         </div>
 
         {/* Main Story Card */}
-        <div className="relative max-w-6xl mx-auto">
+        {currentStory && <div className="relative max-w-6xl mx-auto">
           {/* Navigation Buttons */}
           <button
             onClick={prevStory}
@@ -171,7 +115,7 @@ const AlumniStories: React.FC = () => {
                 {/* Image Side */}
                 <div className="relative h-[400px] md:h-[600px] overflow-hidden">
                   <motion.img
-                    src={currentStory.image}
+                    src={landingImage(currentStory.image)}
                     alt={currentStory.name}
                     className="w-full h-full object-cover"
                     initial={{ scale: 1.2 }}
@@ -195,7 +139,7 @@ const AlumniStories: React.FC = () => {
                   <div className="absolute bottom-6 left-6 right-6">
                     <div className="bg-white/20 backdrop-blur-sm rounded p-4 border border-white/30">
                       <p className="text-black/80 text-xs font-semibold uppercase tracking-wider mb-1">
-                        Current Role
+                        {alumni.roleLabel}
                       </p>
                       <p className="text-white font-semibold text-lg">
                         {currentStory.achievement}
@@ -216,7 +160,7 @@ const AlumniStories: React.FC = () => {
                     transition={{ delay: 0.2 }}
                   >
                     <span className="text-xs font-medium text-orange-600 uppercase tracking-wider mb-2 block">
-                      Alumni Story
+                      {alumni.storyLabel}
                     </span>
                     <h3 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
                       {currentStory.name}
@@ -226,7 +170,7 @@ const AlumniStories: React.FC = () => {
                     </p>
                   </motion.div>
 
-                  {/* Quote */}
+                  {currentStory.quote && (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -238,6 +182,7 @@ const AlumniStories: React.FC = () => {
                       "{currentStory.quote}"
                     </p>
                   </motion.div>
+                  )}
 
                   {/* Story */}
                   <motion.p
@@ -250,21 +195,21 @@ const AlumniStories: React.FC = () => {
                   </motion.p>
 
                   {/* CTA Button */}
-                  <Link to="/stories">
+                  <Link to={alumni.ctaLink}>
                   <motion.button
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                     className="group inline-flex items-center gap-2 text-orange-600 font-semibold hover:text-orange-700 transition-colors w-fit"
                   >
-                    Read full story
+                    {alumni.ctaText}
                     <ArrowUpRight size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </motion.button>
                   </Link>
 
                   {/* Progress indicators */}
                   <div className="mt-12 flex items-center gap-3">
-                    {ALUMNI_STORIES.map((_, index) => (
+                    {stories.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => {
@@ -283,15 +228,11 @@ const AlumniStories: React.FC = () => {
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </div>}
 
         {/* Stats section */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-20">
-          {[
-            { value: "20+", label: "Alumni" },
-            { value: "55%", label: "Employment Rate" },
-            { value: "10+", label: "Partner Companies" }
-          ].map((stat, index) => (
+          {alumni.stats.map((stat, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

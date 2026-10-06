@@ -265,7 +265,7 @@ const ReportsPage: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Newsletter CTA */}
+        {/* News CTA */}
         <div className="mt-20 text-center">
           <div className="bg-white rounded p-8 shadow-lg max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-gray-900 mb-4">

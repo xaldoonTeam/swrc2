@@ -20,7 +20,7 @@ const NewsletterDetail: React.FC = () => {
 
   useEffect(() => {
     if (!slug) {
-      setError("Invalid newsletter");
+      setError("Invalid news");
       setLoading(false);
       return;
     }
@@ -29,7 +29,7 @@ const NewsletterDetail: React.FC = () => {
     newslettersApi
       .get(slug)
       .then(setNewsletter)
-      .catch(() => setError("Newsletter not found"))
+      .catch(() => setError("News not found"))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -46,7 +46,7 @@ const NewsletterDetail: React.FC = () => {
               <Loader2 className="w-7 h-7 text-orange-500 animate-spin" />
             </div>
           </div>
-          <p className="text-stone-600 font-medium">Loading newsletter…</p>
+          <p className="text-stone-600 font-medium">Loading news…</p>
           <div className="h-1 w-24 rounded-full bg-orange-100 overflow-hidden">
             <motion.div
               className="h-full bg-orange-400 rounded-full"
@@ -71,14 +71,14 @@ const NewsletterDetail: React.FC = () => {
           <div className="w-16 h-16 rounded bg-amber-100 flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-amber-600" />
           </div>
-          <p className="text-stone-700 text-lg font-medium mb-2">{error ?? "Newsletter not found"}</p>
-          <p className="text-stone-500 text-sm mb-6">The newsletter you're looking for doesn't exist or may have been removed.</p>
+          <p className="text-stone-700 text-lg font-medium mb-2">{error ?? "News not found"}</p>
+          <p className="text-stone-500 text-sm mb-6">The news you're looking for doesn't exist or may have been removed.</p>
           <Link
-            to="/newsletters"
+            to="/news"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-orange-500 text-white font-semibold rounded-xl hover:bg-orange-600 transition-all shadow-sm hover:shadow-md"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Newsletters
+            Back to News
           </Link>
         </motion.div>
       </div>
@@ -93,7 +93,7 @@ const NewsletterDetail: React.FC = () => {
           <div className="flex items-center gap-2 text-sm text-stone-600 flex-wrap">
             <Link to="/" className="hover:text-orange-500 transition-colors">Home</Link>
             <ChevronRight className="w-4 h-4 text-stone-300 flex-shrink-0" />
-            <Link to="/newsletters" className="hover:text-orange-500 transition-colors">Newsletters</Link>
+            <Link to="/news" className="hover:text-orange-500 transition-colors">News</Link>
             <ChevronRight className="w-4 h-4 text-stone-300 flex-shrink-0" />
             <span className="font-semibold text-stone-900 truncate max-w-[180px] sm:max-w-none">{newsletter.title}</span>
           </div>
@@ -137,11 +137,11 @@ const NewsletterDetail: React.FC = () => {
             </div>
             <div className="mt-14 pt-10 border-t border-stone-100">
               <Link
-                to="/newsletters"
+                to="/news"
                 className="inline-flex items-center gap-2.5 px-4 text-sm py-2 rounded text-orange-600 font-semibold bg-orange-50 hover:bg-orange-100 transition-all duration-200 group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-                Back to all newsletters
+                Back to all news
               </Link>
             </div>
           </div>

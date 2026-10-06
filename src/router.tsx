@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
+import { createBrowserRouter, Outlet, Navigate, useParams } from "react-router-dom";
 
 // Public site
 import MainLayout from "./components/MainLayout";
@@ -26,14 +26,21 @@ import AdminNewsletter from "./pages/admin/AdminNewsletter";
 import AdminResearch from "./pages/admin/AdminResearch";
 import AdminPrograms from "./pages/admin/AdminPrograms";
 import AdminStories from "./pages/admin/AdminStories";
+import AdminTeam from "./pages/admin/AdminTeam";
 import AdminMedia from "./pages/admin/AdminMedia";
 import AdminSettings from "./pages/admin/AdminSettings";
+import AdminLanding from "./pages/admin/AdminLanding";
 import AdminProfile from "./pages/admin/AdminProfile";
 import AdminUsers from "./pages/admin/AdminUsers";
 import RequireRoleAdmin from "./pages/admin/RequireRoleAdmin";
 import FullStoryPage from "./pages/fullStory";
 import ApplyProgram from "./pages/applyForm";
 import ResearchPage from "./pages/Research";
+
+function LegacyNewsRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={slug ? `/news/${slug}` : "/news"} replace />;
+}
 
 const RootLayout = () => (
   <div>
@@ -62,8 +69,10 @@ export const router = createBrowserRouter([
           { path: "research", element: <ResearchPage /> },
           { path: "publications", element: <ReportsPage /> },
           { path: "fullstory", element: <FullStoryPage /> },
-          { path: "newsletters", element: <NewsletterPage /> },
-          { path: "newsletters/:slug", element: <NewsletterDetail /> },
+          { path: "news", element: <NewsletterPage /> },
+          { path: "news/:slug", element: <NewsletterDetail /> },
+          { path: "newsletters", element: <Navigate to="/news" replace /> },
+          { path: "newsletters/:slug", element: <LegacyNewsRedirect /> },
           { path: "media", element: <MediaPage /> },
           { path: "apply", element: <ApplyProgram /> },
 
@@ -85,11 +94,14 @@ export const router = createBrowserRouter([
               { index: true, element: <Navigate to="/admin/dashboard" replace /> },
               { path: "dashboard", element: <Dashboard /> },
               { path: "publications", element: <AdminPublications /> },
-              { path: "newsletters", element: <AdminNewsletter /> },
+              { path: "news", element: <AdminNewsletter /> },
+              { path: "newsletters", element: <Navigate to="/admin/news" replace /> },
               { path: "research", element: <AdminResearch /> },
               { path: "programs", element: <AdminPrograms /> },
               { path: "stories", element: <AdminStories /> },
+              { path: "team", element: <AdminTeam /> },
               { path: "media", element: <AdminMedia /> },
+              { path: "landing", element: <AdminLanding /> },
               { path: "settings", element: <AdminSettings /> },
               { path: "profile", element: <AdminProfile /> },
               { path: "users", element: <RequireRoleAdmin><AdminUsers /></RequireRoleAdmin> },
